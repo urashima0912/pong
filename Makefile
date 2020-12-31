@@ -380,8 +380,9 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 endif
 
 # Define all source files required
-PROJECT_SOURCE_FILES ?= main.c  \
-                        src/palette.c
+PROJECT_SOURCE_FILES ?= main.c          \
+                        src/palette.c   \
+                        src/pivot.c
 
 # Define all object files from source files
 OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))

@@ -3,7 +3,7 @@
 #include "config.h"
 
 int main(void) {
-  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
+  InitWindow(PONG_SCREEN_WIDTH, PONG_SCREEN_HEIGHT, PONG_SCREEN_TITLE);
 
   HideCursor();
   Vector2 pos = (Vector2){ 10.0, 10.0 };
@@ -15,7 +15,7 @@ int main(void) {
     updatePalette(palette);
     // here we are drawing objects.
     BeginDrawing();
-    ClearBackground(COLOR_0);
+    ClearBackground(PONG_COLOR_0);
 
     drawPalette(palette);
 
