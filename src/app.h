@@ -1,9 +1,11 @@
 #ifndef PONG_APP_H
 #define PONG_APP_H
 
+#include "scene_handler.h"
+
 typedef struct App
 {
-  /* data */
+  SceneHandler *sceneHandler;
 } App;
 
 App *initApp(void);

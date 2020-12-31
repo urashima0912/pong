@@ -14,7 +14,7 @@
 #     wrote the original software. If you use this software in a product, an acknowledgment
 #     in the product documentation would be appreciated but is not required.
 #
-#     2. Altered source versions must be plainly marked as such, and must not be misrepresented
+#     2. Altered source versions must mainbe plainly marked as such, and must not be misrepresented
 #     as being the original software.
 #
 #     3. This notice may not be removed or altered from any source distribution.
@@ -380,10 +380,13 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 endif
 
 # Define all source files required
-PROJECT_SOURCE_FILES ?= main.c          \
-                        src/palette.c   \
-                        src/pivot.c     \
-                        src/app.c
+PROJECT_SOURCE_FILES ?= main.c                  \
+                        src/palette.c           \
+                        src/pivot.c             \
+                        src/app.c               \
+                        src/scene_handler.c     \
+                        src/scenes/board.c      \
+                        src/scenes/menu.c
 
 # Define all object files from source files
 OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
@@ -421,6 +424,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		find . -type f -executable -delete
 		rm -fv *.o
 		rm -fv src/*.o
+		rm -fv src/scenes/*.o
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete

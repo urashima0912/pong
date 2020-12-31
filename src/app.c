@@ -19,6 +19,7 @@ App *initApp(void) {
     return NULL;
   }
   settingApp();
+  app->sceneHandler = initSceneHandler();
   return app;
 }
 
@@ -49,16 +50,17 @@ static void settingApp(void) {
 }
 
 static void updateApp(App *const app) {
-  // I need to do it
+  updateSceneHandler(app->sceneHandler);
 }
 
 static void drawApp(const App *const app) {
   BeginDrawing();
   ClearBackground(PONG_COLOR_0);
-
+  drawSceneHandler(app->sceneHandler);
   EndDrawing();
 }
 
 static void freeInternalApp(App *const app) {
+  freeScenehandler(&app->sceneHandler);
   CloseWindow();
 }
