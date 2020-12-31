@@ -21,7 +21,7 @@ int main(void) {
 
     EndDrawing();
   }
-  freePalette(&palette);
+  freePalette(&palette); // freeing palette's memory
   CloseWindow();
 
   return 0;
