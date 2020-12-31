@@ -1,28 +1,16 @@
 #include <raylib.h>
-#include "src/palette.h"
-#include "config.h"
+#include <stdlib.h>
+#include "src/app.h"
 
 int main(void) {
-  InitWindow(PONG_SCREEN_WIDTH, PONG_SCREEN_HEIGHT, PONG_SCREEN_TITLE);
 
-  HideCursor();
-  Vector2 pos = (Vector2){ 10.0, 10.0 };
-  Palette *palette = initPalette(pos);
-
-  SetTargetFPS(60);
-  while (!WindowShouldClose()) {
-    // here we are updating objects.
-    updatePalette(palette);
-    // here we are drawing objects.
-    BeginDrawing();
-    ClearBackground(PONG_COLOR_0);
-
-    drawPalette(palette);
-
-    EndDrawing();
+  App *app = initApp();
+  if (app == NULL) {
+    return 1;
   }
-  freePalette(&palette); // freeing palette's memory
-  CloseWindow();
+
+  runApp(app);
+  freeApp(&app);
 
   return 0;
 }
