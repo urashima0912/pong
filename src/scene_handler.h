@@ -3,7 +3,8 @@
 
 typedef enum ScenesTypes {
   SCENE_MENU = 1,
-  SCENE_BOARD
+  SCENE_BOARD,
+  SCENE_OPTIONS,
 } ScenesTypes;
 
 typedef struct SceneHandler {

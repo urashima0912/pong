@@ -18,7 +18,7 @@ void updateBoard(Board *const board) {
 }
 
 void drawBoard(const Board *const board) {
-  // to do.
+  DrawText("Board", 10, 10, 24, PONG_COLOR_3);
 }
 
 void freeBoard(Board **board) {

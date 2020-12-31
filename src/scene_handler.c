@@ -1,6 +1,7 @@
 #include "scene_handler.h"
 #include "./scenes/board.h"
 #include "./scenes/menu.h"
+#include "./scenes/options.h"
 #include "../config.h"
 #include <stdlib.h>
 #ifdef PONG_DEBUG
@@ -11,9 +12,11 @@
 static void loadScene(SceneHandler *handler, ScenesTypes type);
 static Menu *loadMenuScene(void);
 static Board *loadBoardScene(void);
+static Options *loadBoardOptions(void);
 static void unloadScene(SceneHandler *handler);
 static void updateScene(SceneHandler *handler);
 static void drawScene(const SceneHandler *const handler);
+
 
 // implementation public functions.
 SceneHandler *initSceneHandler(void) {
@@ -23,7 +26,7 @@ SceneHandler *initSceneHandler(void) {
   }
 
   handler->scene = NULL;
-  loadScene(handler, SCENE_MENU);
+  loadScene(handler, SCENE_OPTIONS);
 
   return handler;
 }
@@ -50,14 +53,16 @@ void freeScenehandler(SceneHandler **handler) {
 // implementation static functions.
 static void loadScene(SceneHandler *handler, ScenesTypes type) {
   unloadScene(handler);
+  handler->type = type;
   switch (type) {
     case SCENE_MENU:
-      handler->type = type;
       handler->scene = loadMenuScene();
       break;
     case SCENE_BOARD:
-      handler->type = type;
       handler->scene = loadBoardScene();
+      break;
+    case SCENE_OPTIONS:
+      handler->scene = loadBoardOptions();
   }
 }
 
@@ -68,6 +73,10 @@ static Board *loadBoardScene(void) {
   return initBoard();
 }
 
+static Options *loadBoardOptions(void) {
+  return initOptions();
+}
+
 static void unloadScene(SceneHandler *handler) {
   switch (handler->type) {
     case SCENE_MENU:
@@ -76,6 +85,8 @@ static void unloadScene(SceneHandler *handler) {
     case SCENE_BOARD:
       freeBoard((Board **)&handler->scene);
       break;
+    case SCENE_OPTIONS:
+      freeOptions((Options **)&handler->scene);
   }
 }
 
@@ -86,6 +97,9 @@ static void updateScene(SceneHandler *handler) {
       break;
     case SCENE_BOARD:
       updateBoard((Board *)handler->scene);
+      break;
+    case SCENE_OPTIONS:
+      updateOptions((Options *)handler->scene);
   }
 }
 
@@ -96,5 +110,8 @@ static void drawScene(const SceneHandler *const handler) {
       break;
     case SCENE_BOARD:
       drawBoard((Board *)handler->scene);
+      break;
+    case SCENE_OPTIONS:
+      drawOptions((Options *)handler->scene);
   }
 }
