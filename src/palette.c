@@ -54,7 +54,7 @@ void freePalette(Palette **palette) {
     free(*palette);
     *palette = NULL;
     #ifdef PONG_DEBUG
-    printf("xxx palette deleted \n");
+    printf("palette deleted \n");
     #endif
   }
 }

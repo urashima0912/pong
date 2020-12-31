@@ -32,12 +32,12 @@ void runApp(App *const app) {
 
 void freeApp(App **app) {
   if (*app != NULL) {
-    #ifdef PONG_DEBUG
-      printf("deleted app\n");
-    #endif
     freeInternalApp(*app);
     free(*app);
     *app = NULL;
+    #ifdef PONG_DEBUG
+    printf("deleted app.\n");
+    #endif
   }
 }
 

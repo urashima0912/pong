@@ -1,5 +1,9 @@
 #include "menu.h"
+#include "../../config.h"
 #include <stdlib.h>
+#ifdef PONG_DEBUG
+#include <stdio.h>
+#endif
 
 Menu *initMenu(void) {
   Menu *menu = malloc(sizeof(Menu));
@@ -14,12 +18,15 @@ void updateMenu(Menu *const menu) {
 }
 
 void drawMenu(const Menu *const menu) {
-  // to do.
+  DrawText("MENU", 10, 10, 24, PONG_COLOR_2);
 }
 
 void freeMenu(Menu **menu) {
   if (*menu != NULL) {
     free(*menu);
     *menu = NULL;
+    #ifdef PONG_DEBUG
+    printf("deleted Menu.\n");
+    #endif
   }
 }

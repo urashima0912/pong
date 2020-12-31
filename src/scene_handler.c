@@ -1,6 +1,7 @@
 #include "scene_handler.h"
 #include "./scenes/board.h"
 #include "./scenes/menu.h"
+#include "../config.h"
 #include <stdlib.h>
 #ifdef PONG_DEBUG
 #include <stdio.h>
@@ -21,6 +22,7 @@ SceneHandler *initSceneHandler(void) {
     return NULL;
   }
 
+  handler->scene = NULL;
   loadScene(handler, SCENE_MENU);
 
   return handler;
@@ -48,7 +50,7 @@ void freeScenehandler(SceneHandler **handler) {
 // implementation static functions.
 static void loadScene(SceneHandler *handler, ScenesTypes type) {
   unloadScene(handler);
-  switch (handler->type) {
+  switch (type) {
     case SCENE_MENU:
       handler->type = type;
       handler->scene = loadMenuScene();
@@ -67,14 +69,13 @@ static Board *loadBoardScene(void) {
 }
 
 static void unloadScene(SceneHandler *handler) {
-  if (handler->type) {
-    switch (handler->type) {
-      case SCENE_MENU:
-        freeMenu((Menu **)&handler->scene);
-        break;
-      case SCENE_BOARD:
-        freeBoard((Board **)&handler->scene);
-    }
+  switch (handler->type) {
+    case SCENE_MENU:
+      freeMenu((Menu **)&handler->scene);
+      break;
+    case SCENE_BOARD:
+      freeBoard((Board **)&handler->scene);
+      break;
   }
 }
 

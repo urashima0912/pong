@@ -1,5 +1,9 @@
 #include "board.h"
+#include "../../config.h"
 #include <stdlib.h>
+#ifdef PONG_DEBUG
+#include <stdio.h>
+#endif
 
 Board *initBoard(void) {
   Board *board = malloc(sizeof(Board));
@@ -21,5 +25,8 @@ void freeBoard(Board **board) {
   if (*board != NULL) {
     free(*board);
     *board = NULL;
+    #ifdef PONG_DEBUG
+    printf("deleted Board.\n");
+    #endif
   }
 }

@@ -2,7 +2,7 @@
 #define PONG_SCENE_HANDLER_H
 
 typedef enum ScenesTypes {
-  SCENE_MENU = 0,
+  SCENE_MENU = 1,
   SCENE_BOARD
 } ScenesTypes;
 
