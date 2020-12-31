@@ -8,8 +8,8 @@
 static const int32_t PALETTE_WIDTH = 15.0;
 static const int32_t PALETTE_HEIGHT = 100.0;
 static const float SPEED = 4.2;
-static const Color colorPalette = COLOR_3;
-
+static const Color COLOR_PALETTE = COLOR_3;
+static const int32_t SPACE_COLLISION = 10;
 
 // declaration of static methods.
 static void getEvent(Palette *palette);
@@ -24,7 +24,7 @@ Palette *initPalette(Vector2 position) {
   }
   palette->position = position;
   palette->size = (Vector2){ PALETTE_WIDTH, PALETTE_HEIGHT };
-  palette->color = colorPalette;
+  palette->color = COLOR_PALETTE;
   return palette;
 }
 
@@ -39,17 +39,17 @@ void drawPalette(const Palette *const palette) {
 
   // x pivot.
   DrawLine(
-    palette->position.x - 10,
+    palette->position.x - SPACE_COLLISION,
     palette->position.y,
-    palette->position.x + 10,
+    palette->position.x + SPACE_COLLISION,
     palette->position.y,
     RED
   );
   DrawLine(
     palette->position.x,
-    palette->position.y - 10,
+    palette->position.y - SPACE_COLLISION,
     palette->position.x,
-    palette->position.y + 10,
+    palette->position.y + SPACE_COLLISION,
     GREEN
   );
 }
