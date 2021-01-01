@@ -7,7 +7,7 @@
 #endif
 
 // declarations constants
-static const float SPEED = 3.3;
+static const float SPEED = 4.3;
 
 // declaration static functions.
 static void showShapeBall(const Ball *const ball);
@@ -105,7 +105,13 @@ static bool collisionPalette(const Ball *const ball, const Palette *const palett
 static void changeBallVelocity(Ball *const ball, const Palette *const palette) {
   ball->velocity.x *= -1;
   if (palette->velocity.y != 0) {
-    const int32_t angle = GetRandomValue(25, 60);
+    const int32_t value = GetRandomValue(30, 60);
+    const float angle = DEG2RAD * value;
     ball->velocity.y = sin(angle * palette->velocity.y);
+  } else {
+    const int32_t value = GetRandomValue(0, 5);
+    if (value > 4) {
+      ball->velocity.y = 0;
+    }
   }
 }
