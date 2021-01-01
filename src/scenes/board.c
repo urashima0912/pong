@@ -20,16 +20,17 @@ Board *initBoard(void) {
 
   board->ptoEnemy = 0;
   board->ptoPlayer = 0;
+  const int32_t sizeLimit = 15;
   board->limitRecLeft = (Rectangle) {
     0,
     0,
-    15,
+    sizeLimit,
     GetScreenHeight()
   };
   board->limitRecRight = (Rectangle) {
-    GetScreenWidth() - 15,
+    GetScreenWidth() - sizeLimit,
     0,
-    15,
+    sizeLimit,
     GetScreenHeight()
   };
 
@@ -119,8 +120,8 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
   const int32_t middleWidth = GetScreenWidth() / 2; 
   const int32_t posY = 10;
   const int32_t fontSize = 32;
-  const char *strPtoPlayer= TextFormat("pl1: %d", ptoPlayer);
-  const char *strPtoEnemy = TextFormat("pl2: %d", ptoEnemy);
+  const char *strPtoPlayer= TextFormat("%d", ptoPlayer);
+  const char *strPtoEnemy = TextFormat("%d", ptoEnemy);
   const int32_t lenStrPlayer = (TextLength(strPtoPlayer) * (fontSize / 2)) / 2;
   const int32_t lenStrEnemy = (middleWidth / 2) - (TextLength(strPtoEnemy) * (fontSize / 2) / 2);
   DrawText(
@@ -128,7 +129,7 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     (middleWidth / 2) - lenStrPlayer,
     posY,
     fontSize,
-    PONG_COLOR_2
+    PONG_COLOR_3
   );
 
   DrawText(
@@ -136,6 +137,6 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     middleWidth + lenStrEnemy,
     posY,
     fontSize,
-    PONG_COLOR_2
+    PONG_COLOR_3
   );
 }

@@ -8,7 +8,7 @@
 #endif
 
 // declarations constants
-static const float SPEED = 4.3;
+static const float SPEED = 5.3;
 static const int32_t SIZE = 10;
 
 // declaration static functions.
@@ -36,7 +36,7 @@ void drawBall(const Ball *const ball) {
     ball->position.y,
     ball->size.x,
     ball->size.y,
-    PONG_COLOR_2
+    PONG_COLOR_3
   );
 
   #ifdef PONG_PIVOT
