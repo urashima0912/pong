@@ -31,6 +31,7 @@ Palette *initPalette(Vector2 position, bool isEnemy) {
   palette->size = (Vector2){ PALETTE_WIDTH, PALETTE_HEIGHT };
   palette->color = COLOR_PALETTE;
   palette->isEnemy = isEnemy;
+  palette->velocity = (Vector2) { 0.0f, 0.0f };
 
   return palette;
 }
@@ -89,10 +90,14 @@ static void getEvent(Palette *palette) {
   }
 
   if (moveUp) {
-    palette->position.y -= SPEED;
+    palette->velocity.y = -1;
   } else if (moveDown) {
-    palette->position.y += SPEED;
+    palette->velocity.y = 1;
+  } else {
+    palette->velocity.y = 0;
   }
+
+  palette->position.y += palette->velocity.y * SPEED;
 }
 
 static void showShapeArea(const Palette *const palette) {

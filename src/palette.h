@@ -10,7 +10,9 @@ extern "C" {
 typedef struct Palette {
   Vector2 position;
   Vector2 size;
+  Vector2 velocity;
   Color color;
+
   bool isEnemy;
 
 } Palette;

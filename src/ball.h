@@ -2,6 +2,7 @@
 #define PONG_BALL_H
 
 #include <raylib.h>
+#include "palette.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,14 +11,14 @@ extern "C" {
 typedef struct Ball {
   Vector2 position;
   Vector2 size;
-
+  Vector2 velocity;
 } Ball;
 
 Ball* initBall(Vector2 position);
 
 void drawBall(const Ball *const ball);
 
-void updateBall(Ball *ball);
+void updateBall(Ball *ball, const Palette *const player, const Palette *const enemy);
 
 void freeBall(Ball **ball);
 

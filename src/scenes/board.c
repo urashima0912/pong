@@ -31,7 +31,7 @@ Board *initBoard(void) {
 void updateBoard(Board *const board) {
   updatePalette(board->player);
   updatePalette(board->enemy);
-  updateBall(board->ball);
+  updateBall(board->ball, board->player, board->enemy);
 }
 
 void drawBoard(const Board *const board) {
