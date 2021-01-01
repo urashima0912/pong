@@ -17,7 +17,6 @@ static void showShapeBall(const Ball *const ball);
 #endif
 static bool collisionPalette(const Ball *const ball, const Palette *const palette);
 static void changeBallVelocity(Ball *const ball, const Palette *const palette);
-static void resetBall(Ball *const ball);
 
 // implementation public functions.
 Ball* initBall(void) {
@@ -62,10 +61,6 @@ void updateBall(Ball *ball, const Palette *const player, const Palette *const en
   if (ball->position.y < 0 || ball->position.y > GetScreenHeight() - SIZE) {
     ball->velocity.y *= -1;
   }
-
-  if (ball->position.x < 25 || (ball->position.x + ball->size.x) > GetScreenWidth() - 25) {
-    resetBall(ball);
-  }
 }
 
 void freeBall(Ball **ball) {
@@ -76,6 +71,15 @@ void freeBall(Ball **ball) {
     printf("ball deleted.\n");
     #endif
   }
+}
+
+void resetBall(Ball *const ball) {
+  ball->position.x = GetScreenWidth() / 2;
+  ball->position.y = GetScreenHeight() / 2;
+  ball->velocity = (Vector2) { 0, 0 };
+  
+  const int32_t isLeft = GetRandomValue(0, 1);
+  ball->velocity.x = (isLeft) ? -1 : 1;
 }
 
 
@@ -122,13 +126,4 @@ static void changeBallVelocity(Ball *const ball, const Palette *const palette) {
       ball->velocity.y = 0;
     }
   }
-}
-
-static void resetBall(Ball *const ball) {
-  ball->position.x = GetScreenWidth() / 2;
-  ball->position.y = GetScreenHeight() / 2;
-  ball->velocity = (Vector2) { 0, 0 };
-  
-  const int32_t isLeft = GetRandomValue(0, 1);
-  ball->velocity.x = (isLeft) ? -1 : 1;
 }

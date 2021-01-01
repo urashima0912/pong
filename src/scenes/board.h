@@ -3,6 +3,7 @@
 
 #include "../palette.h"
 #include "../ball.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,6 +13,13 @@ typedef struct Board {
   Palette *player;
   Palette *enemy;
   Ball *ball;
+
+  int32_t ptoEnemy;
+  int32_t ptoPlayer;
+
+  Rectangle limitRecLeft;
+  Rectangle limitRecRight;
+
 } Board;
 
 Board *initBoard(void);

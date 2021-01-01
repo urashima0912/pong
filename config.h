@@ -12,7 +12,7 @@ extern "C" {
 #define PONG_SCREEN_TITLE "Pong!"
 
 #define PONG_DEBUG 1
-#define PONG_PIVOT 1
+// #define PONG_PIVOT 1
 
 // #define PONG_GAMEBOY_POCKET_COLOR 1
 #ifndef PONG_GAMEBOY_POCKET_COLOR

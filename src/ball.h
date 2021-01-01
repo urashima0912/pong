@@ -22,6 +22,8 @@ void updateBall(Ball *ball, const Palette *const player, const Palette *const en
 
 void freeBall(Ball **ball);
 
+void resetBall(Ball *const ball);
+
 #ifdef __cplusplus
 }
 #endif
