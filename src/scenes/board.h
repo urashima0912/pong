@@ -1,12 +1,16 @@
 #ifndef PONG_BOARD_H
 #define PONG_BOARD_H
 
+#include "../palette.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct Board {
-  // to do.
+  Palette *player;
+  Palette *enemy;
+
 } Board;
 
 Board *initBoard(void);

@@ -3,19 +3,28 @@
 
 #include <raylib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct Palette {
   Vector2 position;
   Vector2 size;
   Color color;
+  bool isEnemy;
 
 } Palette;
 
-Palette *initPalette(Vector2 position);
+Palette *initPalette(Vector2 position, bool isEnemy);
 
 void drawPalette(const Palette *const palette);
 
 void updatePalette(Palette *palette);
 
 void freePalette(Palette **palette);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PONG_PALETTE_H

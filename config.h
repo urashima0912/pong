@@ -3,6 +3,10 @@
 
 #include <raylib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define PONG_SCREEN_WIDTH 640
 #define PONG_SCREEN_HEIGHT 480
 #define PONG_SCREEN_TITLE "Pong!"
@@ -21,6 +25,10 @@
 #define PONG_COLOR_1 (Color){ 112, 107, 102, 255 }
 #define PONG_COLOR_2 (Color){ 168, 159, 148, 255 }
 #define PONG_COLOR_3 (Color){ 224, 219, 205, 255 }
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif //PONG_CONFIG_H

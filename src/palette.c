@@ -21,7 +21,7 @@ static void getEvent(Palette *palette);
 
 
 // implementation of public methods.
-Palette *initPalette(Vector2 position) {
+Palette *initPalette(Vector2 position, bool isEnemy) {
   Palette *palette = malloc(sizeof(Palette));
   if (palette == NULL) {
     return NULL;
@@ -29,6 +29,8 @@ Palette *initPalette(Vector2 position) {
   palette->position = position;
   palette->size = (Vector2){ PALETTE_WIDTH, PALETTE_HEIGHT };
   palette->color = COLOR_PALETTE;
+  palette->isEnemy = isEnemy;
+
   return palette;
 }
 
@@ -73,9 +75,20 @@ static bool canGetUp(Palette *palette) {
 }
 
 static void getEvent(Palette *palette) {
-  if (canGetUp(palette) && (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))) {
+  bool moveUp = false;
+  bool moveDown = false;
+
+  if (palette->isEnemy) {
+    moveUp = canGetUp(palette) && IsKeyDown(KEY_UP);
+    moveDown = canGetDown(palette) && IsKeyDown(KEY_DOWN);
+  } else {
+    moveUp = canGetUp(palette) && IsKeyDown(KEY_W);
+    moveDown = canGetDown(palette) && IsKeyDown(KEY_S);
+  }
+
+  if (moveUp) {
     palette->position.y -= SPEED;
-  } else if (canGetDown(palette) && (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))) {
+  } else if (moveDown) {
     palette->position.y += SPEED;
   }
 }

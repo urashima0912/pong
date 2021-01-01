@@ -26,7 +26,7 @@ SceneHandler *initSceneHandler(void) {
   }
 
   handler->scene = NULL;
-  loadScene(handler, SCENE_OPTIONS);
+  loadScene(handler, SCENE_BOARD);
 
   return handler;
 }

@@ -3,6 +3,10 @@
 
 #include <raylib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct Ball {
   Vector2 position;
   Vector2 size;
@@ -16,5 +20,9 @@ void drawBall(const Ball *const ball);
 void updateBall(Ball *ball);
 
 void freeBall(Ball **ball);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PONG_BAL_H
