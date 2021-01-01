@@ -14,7 +14,7 @@ extern "C" {
 #define PONG_DEBUG 1
 #define PONG_PIVOT 1
 
-#define PONG_GAMEBOY_POCKET_COLOR 1
+// #define PONG_GAMEBOY_POCKET_COLOR 1
 #ifndef PONG_GAMEBOY_POCKET_COLOR
 #define PONG_COLOR_0 (Color){ 13, 4, 5, 255 }
 #define PONG_COLOR_1 (Color){ 94, 18, 16, 255 }

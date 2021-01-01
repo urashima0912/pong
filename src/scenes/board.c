@@ -6,6 +6,10 @@
 #include <stdio.h>
 #endif
 
+// declaration static functions.
+static void drawDivider(void);
+
+
 // implementation public functions.
 Board *initBoard(void) {
   Board *board = malloc(sizeof(Board));
@@ -22,8 +26,7 @@ Board *initBoard(void) {
   const Vector2 playerEnemy = (Vector2){ screenWidth - 30, (screenHeight / 2) - 50 };
   board->enemy = initPalette(playerEnemy, true);
 
-  const Vector2 ballPosition = (Vector2){ screenWidth / 2, screenHeight / 2 };
-  board->ball = initBall(ballPosition);
+  board->ball = initBall();
 
   return board;
 }
@@ -37,6 +40,7 @@ void updateBoard(Board *const board) {
 void drawBoard(const Board *const board) {
   drawPalette(board->player);
   drawPalette(board->enemy);
+  drawDivider();
   drawBall(board->ball);
 }
 
@@ -51,4 +55,17 @@ void freeBoard(Board **board) {
     printf("deleted Board.\n");
     #endif
   }
+}
+
+
+// implementation static functions.
+static void drawDivider(void) {
+  const int32_t size = 5;
+  DrawRectangle(
+    (GetScreenWidth() / 2) - size,
+    0,
+    size,
+    GetScreenHeight(),
+    PONG_COLOR_2
+  );
 }

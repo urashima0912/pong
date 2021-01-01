@@ -1,5 +1,6 @@
 #include "ball.h"
 #include "../config.h"
+#include "pivot.h"
 #include <stdlib.h>
 #include <math.h>
 #ifdef PONG_DEBUG
@@ -8,24 +9,24 @@
 
 // declarations constants
 static const float SPEED = 4.3;
+static const int32_t SIZE = 10;
 
 // declaration static functions.
+#ifdef PONG_PIVOT
 static void showShapeBall(const Ball *const ball);
+#endif
 static bool collisionPalette(const Ball *const ball, const Palette *const palette);
 static void changeBallVelocity(Ball *const ball, const Palette *const palette);
+static void resetBall(Ball *const ball);
 
 // implementation public functions.
-Ball* initBall(Vector2 position) {
+Ball* initBall(void) {
   Ball *ball = malloc(sizeof(Ball));
   if (ball == NULL) {
     return NULL;
   }
-  ball->position = position;
-  ball->size = (Vector2){10.0, 10.0};
-  ball->velocity = (Vector2) { 0, 0 };
-  
-  const int32_t isLeft = GetRandomValue(0, 1);
-  ball->velocity.x = (isLeft) ? -1 : 1;
+  ball->size = (Vector2){ SIZE, SIZE };
+  resetBall(ball);
 
   return ball;
 }
@@ -36,11 +37,12 @@ void drawBall(const Ball *const ball) {
     ball->position.y,
     ball->size.x,
     ball->size.y,
-    PONG_COLOR_3
+    PONG_COLOR_2
   );
 
   #ifdef PONG_PIVOT
   showShapeBall(ball);
+  drawPivot(ball->position);
   #endif
 }
 
@@ -57,9 +59,13 @@ void updateBall(Ball *ball, const Palette *const player, const Palette *const en
     changeBallVelocity(ball, enemy);
   }
 
-  if (ball->position.y < 0 || ball->position.y > GetScreenHeight() - 10) {
+  if (ball->position.y < 0 || ball->position.y > GetScreenHeight() - SIZE) {
     ball->velocity.y *= -1;
-  } 
+  }
+
+  if (ball->position.x < 25 || (ball->position.x + ball->size.x) > GetScreenWidth() - 25) {
+    resetBall(ball);
+  }
 }
 
 void freeBall(Ball **ball) {
@@ -74,6 +80,7 @@ void freeBall(Ball **ball) {
 
 
 // implementation static functions.
+#ifdef PONG_PIVOT
 static void showShapeBall(const Ball *const ball) {
   DrawRectangleLines(
     ball->position.x,
@@ -83,6 +90,7 @@ static void showShapeBall(const Ball *const ball) {
     BLUE
   );
 }
+#endif
 
 static bool collisionPalette(const Ball *const ball, const Palette *const palette) {
   const Rectangle recBall = (Rectangle) {
@@ -114,4 +122,13 @@ static void changeBallVelocity(Ball *const ball, const Palette *const palette) {
       ball->velocity.y = 0;
     }
   }
+}
+
+static void resetBall(Ball *const ball) {
+  ball->position.x = GetScreenWidth() / 2;
+  ball->position.y = GetScreenHeight() / 2;
+  ball->velocity = (Vector2) { 0, 0 };
+  
+  const int32_t isLeft = GetRandomValue(0, 1);
+  ball->velocity.x = (isLeft) ? -1 : 1;
 }

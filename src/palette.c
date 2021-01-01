@@ -18,8 +18,9 @@ static const float SPEED = 5.2;
 static bool canGetDown(Palette *palette);
 static bool canGetUp(Palette *palette);
 static void getEvent(Palette *palette);
+#ifdef PONG_PIVOT
 static void showShapeArea(const Palette *const palette);
-
+#endif
 
 // implementation of public methods.
 Palette *initPalette(Vector2 position, bool isEnemy) {
@@ -100,6 +101,7 @@ static void getEvent(Palette *palette) {
   palette->position.y += palette->velocity.y * SPEED;
 }
 
+#ifdef PONG_PIVOT
 static void showShapeArea(const Palette *const palette) {
   DrawRectangleLines(
     palette->position.x,
@@ -109,3 +111,4 @@ static void showShapeArea(const Palette *const palette) {
     BLUE
   );
 }
+#endif

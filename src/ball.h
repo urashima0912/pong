@@ -14,7 +14,7 @@ typedef struct Ball {
   Vector2 velocity;
 } Ball;
 
-Ball* initBall(Vector2 position);
+Ball* initBall(void);
 
 void drawBall(const Ball *const ball);
 
