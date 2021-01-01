@@ -11,13 +11,14 @@
 static const Color COLOR_PALETTE = PONG_COLOR_3;
 static const int32_t PALETTE_WIDTH = 15.0;
 static const int32_t PALETTE_HEIGHT = 100.0;
-static const float SPEED = 4.2;
+static const float SPEED = 5.2;
 
 
 // declaration of static methods.
 static bool canGetDown(Palette *palette);
 static bool canGetUp(Palette *palette);
 static void getEvent(Palette *palette);
+static void showShapeArea(const Palette *const palette);
 
 
 // implementation of public methods.
@@ -44,6 +45,7 @@ void drawPalette(const Palette *const palette) {
   );
   #ifdef PONG_PIVOT
     drawPivot(palette->position);
+    showShapeArea(palette);
   #endif
 }
 
@@ -91,4 +93,14 @@ static void getEvent(Palette *palette) {
   } else if (moveDown) {
     palette->position.y += SPEED;
   }
+}
+
+static void showShapeArea(const Palette *const palette) {
+  DrawRectangleLines(
+    palette->position.x,
+    palette->position.y,
+    palette->size.x,
+    palette->size.y,
+    BLUE
+  );
 }

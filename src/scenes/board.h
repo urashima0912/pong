@@ -2,6 +2,7 @@
 #define PONG_BOARD_H
 
 #include "../palette.h"
+#include "../ball.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,7 +11,7 @@ extern "C" {
 typedef struct Board {
   Palette *player;
   Palette *enemy;
-
+  Ball *ball;
 } Board;
 
 Board *initBoard(void);

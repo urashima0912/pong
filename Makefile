@@ -384,6 +384,7 @@ PROJECT_SOURCE_FILES ?= main.c                  \
                         src/palette.c           \
                         src/pivot.c             \
                         src/app.c               \
+                        src/ball.c              \
                         src/scene_handler.c     \
                         src/scenes/board.c      \
                         src/scenes/menu.c       \
