@@ -15,7 +15,7 @@ void updateMenu(Menu *const menu) {
 }
 
 void drawMenu(const Menu *const menu) {
-  DrawText("MENU", 10, 10, 24, PONG_COLOR_2);
+  // to do.
 }
 
 void freeMenu(Menu **menu) {

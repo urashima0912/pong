@@ -1,5 +1,6 @@
 #include "app.h"
 #include "config.h"
+#include "global.h"
 #include <stdlib.h>
 
 // declaration static functions.
@@ -8,6 +9,7 @@ static void updateApp(App *const app);
 static void drawApp(const App *const app);
 static void freeInternalApp(App *app);
 
+Global globalData = { 0 };
 
 // implementation public functions.
 App *initApp(void) {
@@ -16,6 +18,7 @@ App *initApp(void) {
     return NULL;
   }
   settingApp();
+  globalData.colors = getRusticGB();
   app->sceneHandler = initSceneHandler();
   return app;
 }
@@ -52,7 +55,7 @@ static void updateApp(App *const app) {
 
 static void drawApp(const App *const app) {
   BeginDrawing();
-  ClearBackground(PONG_COLOR_0);
+  ClearBackground(globalData.colors.color0);
   drawSceneHandler(app->sceneHandler);
   EndDrawing();
 }

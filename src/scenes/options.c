@@ -8,7 +8,6 @@ Options *initOptions(void) {
   if (options == NULL) {
     return NULL;
   }
-
   return options;
 }
 
@@ -17,7 +16,7 @@ void updateOptions(Options *const options) {
 }
 
 void drawOptions(const Options *const options) {
-  DrawText("Options", 10, 10, 24, PONG_COLOR_3);
+  // to do.
 }
 
 void freeOptions(Options **options) {

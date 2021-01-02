@@ -1,11 +1,13 @@
 #include "palette.h"
 #include "../config.h"
 #include "pivot.h"
+#include "global.h"
 #include <stdlib.h>
 #include <stdint.h>
 
+extern Global globalData;
+
 // constants and variables.
-static const Color COLOR_PALETTE = PONG_COLOR_3;
 static const int32_t PALETTE_WIDTH = 15.0;
 static const int32_t PALETTE_HEIGHT = 100.0;
 static const float SPEED = 5.2;
@@ -27,7 +29,7 @@ Palette *initPalette(Vector2 position, bool isEnemy) {
   }
   palette->position = position;
   palette->size = (Vector2){ PALETTE_WIDTH, PALETTE_HEIGHT };
-  palette->color = COLOR_PALETTE;
+  palette->color = globalData.colors.color3;
   palette->isEnemy = isEnemy;
   palette->velocity = (Vector2) { 0.0f, 0.0f };
 

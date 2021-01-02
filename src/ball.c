@@ -1,8 +1,11 @@
 #include "ball.h"
 #include "../config.h"
 #include "pivot.h"
+#include "global.h"
 #include <stdlib.h>
 #include <math.h>
+
+extern Global globalData;
 
 // declarations constants
 static const float SPEED = 5.3;
@@ -33,7 +36,7 @@ void drawBall(const Ball *const ball) {
     ball->position.y,
     ball->size.x,
     ball->size.y,
-    PONG_COLOR_3
+    globalData.colors.color3
   );
 
   #ifdef PONG_PIVOT

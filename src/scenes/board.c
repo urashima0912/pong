@@ -1,6 +1,9 @@
 #include "board.h"
 #include "../../config.h"
+#include "../global.h"
 #include <stdlib.h>
+
+extern Global globalData;
 
 // declaration static functions.
 static void drawDivider(void);
@@ -58,8 +61,8 @@ void drawBoard(const Board *const board) {
   drawDivider();
   drawBall(board->ball);
 
-  DrawRectangleRec(board->limitRecLeft, PONG_COLOR_2);
-  DrawRectangleRec(board->limitRecRight, PONG_COLOR_2);
+  DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
+  DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
   drawPoints(board->ptoPlayer, board->ptoEnemy);
 }
 
@@ -87,7 +90,7 @@ static void drawDivider(void) {
     posY,
     size,
     GetScreenHeight(),
-    PONG_COLOR_2
+    globalData.colors.color2
   );
 }
 
@@ -126,7 +129,7 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     (middleWidth / 2) - lenStrPlayer,
     posY,
     fontSize,
-    PONG_COLOR_3
+    globalData.colors.color3
   );
 
   DrawText(
@@ -134,6 +137,6 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     middleWidth + lenStrEnemy,
     posY,
     fontSize,
-    PONG_COLOR_3
+    globalData.colors.color3
   );
 }

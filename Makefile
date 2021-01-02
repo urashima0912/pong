@@ -388,7 +388,8 @@ PROJECT_SOURCE_FILES ?= main.c                  \
                         src/scene_handler.c     \
                         src/scenes/board.c      \
                         src/scenes/menu.c       \
-                        src/scenes/options.c
+                        src/scenes/options.c    \
+                        src/global.c            \
 
 # Define all object files from source files
 OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
