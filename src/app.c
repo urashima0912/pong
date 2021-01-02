@@ -18,7 +18,10 @@ App *initApp(void) {
     return NULL;
   }
   settingApp();
+
   globalData.colors = getPocketGB();
+  globalData.maxPtos = 1;
+
   app->sceneHandler = initSceneHandler();
   return app;
 }
@@ -46,6 +49,7 @@ void freeApp(App **app) {
 static void settingApp(void) {
   InitWindow(PONG_SCREEN_WIDTH, PONG_SCREEN_HEIGHT, PONG_SCREEN_TITLE);
   HideCursor();
+  SetExitKey(KEY_F8);
   SetTargetFPS(60);
 }
 

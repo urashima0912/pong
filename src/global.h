@@ -2,6 +2,7 @@
 #define PONG_GLOBAL_H
 
 #include <raylib.h>
+#include <stdint.h>
 
 typedef struct Colors {
   Color color0;
@@ -13,6 +14,7 @@ typedef struct Colors {
 typedef struct Global {
   Colors colors;
   bool showCollisionShape;
+  int32_t maxPtos;
 } Global;
 
 Colors getPocketGB(void);

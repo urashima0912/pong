@@ -12,11 +12,13 @@ static void checkCollisions(Board *const board);
 static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy);
 static void drawCounter(void);
 static void drawLimits(const Board *const board);
+static void drawWinner(const Board *const board);
 
 static bool showCounter = false;
 static const int32_t MAX_COUNTER = 4;
 static int32_t counter = MAX_COUNTER;
 static int32_t prevCounter = 0;
+static bool someoneWon = false;
 
 // implementation public functions.
 Board *initBoard(void) {
@@ -56,13 +58,15 @@ Board *initBoard(void) {
 }
 
 void updateBoard(Board *const board) {
-  if (!showCounter) {
-    updatePalette(board->player);
-    updatePalette(board->enemy);
-    updateBall(board->ball, board->player, board->enemy);
-    checkCollisions(board);
-  } else {
-    drawCounter();
+  if (!someoneWon) {
+    if (!showCounter) {
+      updatePalette(board->player);
+      updatePalette(board->enemy);
+      updateBall(board->ball, board->player, board->enemy);
+      checkCollisions(board);
+    } else {
+      drawCounter();
+    }
   }
 }
 
@@ -79,6 +83,10 @@ void drawBoard(const Board *const board) {
     const int32_t posX = GetScreenWidth() / 2 - (fontSize / 3);
     const int32_t posY = GetScreenHeight() / 2 - (fontSize / 2);
     DrawText(TextFormat("%d", counter), posX, posY, fontSize, globalData.colors.color1);
+  }
+
+  if (someoneWon) {
+    drawWinner(board);
   }
 }
 
@@ -131,6 +139,11 @@ static void checkCollisions(Board *const board) {
     board->ptoPlayer += 1;
     resetBall(board->ball);
     showCounter = true;
+  }
+
+  if (board->ptoPlayer >= globalData.maxPtos || board->ptoEnemy >= globalData.maxPtos) {
+    someoneWon = true;
+    showCounter = false;
   }
 }
 
@@ -193,4 +206,31 @@ static void drawLimits(const Board *const board) {
     // DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
     // DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
   }
+}
+
+static void drawWinner(const Board *const board) {
+  Rectangle rec = (Rectangle){ 0 };
+  int32_t middleScreen = GetScreenWidth() / 4;
+
+  if (board->ptoPlayer >= globalData.maxPtos) {
+    rec.x = 0;
+    rec.y = 0;
+    rec.width = GetScreenWidth() / 2;
+    rec.height = GetScreenHeight();
+
+  } else if (board->ptoEnemy >= globalData.maxPtos) {
+    rec.x = GetScreenWidth() / 2;
+    rec.y = 0;
+    rec.width = GetScreenWidth() / 2;
+    rec.height = GetScreenHeight();
+    middleScreen = GetScreenWidth() / 2 + middleScreen;
+  }
+
+  DrawRectangleRec(rec, globalData.colors.color1);
+
+  const char *msg = "Winner!!";
+  const int32_t fontSize = 32;
+  const int32_t posX = middleScreen - (TextLength(msg) * (fontSize / 2)) / 2;
+  const int32_t posY = GetScreenHeight() / 2;
+  DrawText(msg, posX, posY, fontSize, globalData.colors.color3);
 }
