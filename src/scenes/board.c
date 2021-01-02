@@ -226,7 +226,7 @@ static void drawWinner(const Board *const board) {
     middleScreen = GetScreenWidth() / 2 + middleScreen;
   }
 
-  DrawRectangleRec(rec, globalData.colors.color1);
+  DrawRectangleRec(rec, Fade(globalData.colors.color1, 0.95));
 
   const char *msg = "Winner!!";
   const int32_t fontSize = 32;
