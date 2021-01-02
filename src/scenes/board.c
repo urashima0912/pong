@@ -10,6 +10,12 @@ static void drawDivider(void);
 static bool checkCollisionLimit(const Ball *const ball, const Rectangle limit);
 static void checkCollisions(Board *const board);
 static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy);
+static void drawCounter(void);
+
+static bool showCounter = false;
+static const int32_t MAX_COUNTER = 4;
+static int32_t counter = MAX_COUNTER;
+static int32_t prevCounter = 0;
 
 // implementation public functions.
 Board *initBoard(void) {
@@ -49,10 +55,14 @@ Board *initBoard(void) {
 }
 
 void updateBoard(Board *const board) {
-  updatePalette(board->player);
-  updatePalette(board->enemy);
-  updateBall(board->ball, board->player, board->enemy);
-  checkCollisions(board);
+  if (!showCounter) {
+    updatePalette(board->player);
+    updatePalette(board->enemy);
+    updateBall(board->ball, board->player, board->enemy);
+    checkCollisions(board);
+  } else {
+    drawCounter();
+  }
 }
 
 void drawBoard(const Board *const board) {
@@ -64,6 +74,13 @@ void drawBoard(const Board *const board) {
   DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
   DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
   drawPoints(board->ptoPlayer, board->ptoEnemy);
+
+  if (showCounter) {
+    const int32_t fontSize = 128;
+    const int32_t posX = GetScreenWidth() / 2 - (fontSize / 3);
+    const int32_t posY = GetScreenHeight() / 2 - (fontSize / 2);
+    DrawText(TextFormat("%d", counter), posX, posY, fontSize, globalData.colors.color1);
+  }
 }
 
 void freeBoard(Board **board) {
@@ -108,11 +125,13 @@ static void checkCollisions(Board *const board) {
   if (checkCollisionLimit(board->ball, board->limitRecLeft)) {
     board->ptoEnemy += 1;
     resetBall(board->ball);
+    showCounter = true;
   }
 
   if (checkCollisionLimit(board->ball, board->limitRecRight)) {
     board->ptoPlayer += 1;
     resetBall(board->ball);
+    showCounter = true;
   }
 }
 
@@ -139,4 +158,18 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     fontSize,
     globalData.colors.color3
   );
+}
+
+static void drawCounter (void) {
+  if (counter > 0) {
+    const int32_t time = (int32_t) GetTime();
+    if (time != prevCounter) {
+      prevCounter = time;
+      counter--;
+    }
+  } else {
+    showCounter = false;
+    counter = MAX_COUNTER;
+    prevCounter = 0;
+  }
 }
