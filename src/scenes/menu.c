@@ -1,9 +1,6 @@
 #include "menu.h"
 #include "../../config.h"
 #include <stdlib.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
 
 Menu *initMenu(void) {
   Menu *menu = malloc(sizeof(Menu));
@@ -26,7 +23,7 @@ void freeMenu(Menu **menu) {
     free(*menu);
     *menu = NULL;
     #ifdef PONG_DEBUG
-    printf("deleted Menu.\n");
+    TraceLog(LOG_INFO, "xxx Menu DELETED.");
     #endif
   }
 }

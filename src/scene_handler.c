@@ -4,9 +4,7 @@
 #include "./scenes/options.h"
 #include "../config.h"
 #include <stdlib.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
+
 
 // declaration static functions.
 static void loadScene(SceneHandler *handler, ScenesTypes type);
@@ -45,7 +43,7 @@ void freeScenehandler(SceneHandler **handler) {
     free(*handler);
     handler = NULL;
     #ifdef PONG_DEBUG
-    printf("deleted SceneHandler.\n");
+    TraceLog(LOG_INFO, "xxx SceneHandler DELETED.");
     #endif
   }
 }

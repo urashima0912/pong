@@ -3,9 +3,6 @@
 #include "pivot.h"
 #include <stdlib.h>
 #include <stdint.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
 
 // constants and variables.
 static const Color COLOR_PALETTE = PONG_COLOR_3;
@@ -60,7 +57,7 @@ void freePalette(Palette **palette) {
     free(*palette);
     *palette = NULL;
     #ifdef PONG_DEBUG
-    printf("palette deleted \n");
+    TraceLog(LOG_INFO, "xxx Palette DELETED.");
     #endif
   }
 }

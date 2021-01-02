@@ -1,9 +1,6 @@
 #include "board.h"
 #include "../../config.h"
 #include <stdlib.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
 
 // declaration static functions.
 static void drawDivider(void);
@@ -74,7 +71,7 @@ void freeBoard(Board **board) {
     free(*board);
     *board = NULL;
     #ifdef PONG_DEBUG
-    printf("deleted Board.\n");
+    TraceLog(LOG_INFO, "xxx Board DELETED.");
     #endif
   }
 }

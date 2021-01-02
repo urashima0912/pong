@@ -3,9 +3,6 @@
 #include "pivot.h"
 #include <stdlib.h>
 #include <math.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
 
 // declarations constants
 static const float SPEED = 5.3;
@@ -68,7 +65,7 @@ void freeBall(Ball **ball) {
     free(*ball);
     *ball = NULL;
     #ifdef PONG_DEBUG
-    printf("ball deleted.\n");
+    TraceLog(LOG_INFO, "xxx Ball DELETED.");
     #endif
   }
 }

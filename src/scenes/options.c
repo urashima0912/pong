@@ -1,10 +1,7 @@
 #include "options.h"
 #include "../../config.h"
-
 #include <stdlib.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
+
 
 Options *initOptions(void) {
   Options *options = malloc(sizeof(Options));
@@ -28,7 +25,7 @@ void freeOptions(Options **options) {
     free(*options);
     *options = NULL;
     #ifdef PONG_DEBUG
-    printf("options deleted.\n");
+    TraceLog(LOG_INFO, "xxx Options DELETED.");
     #endif
   }
 }

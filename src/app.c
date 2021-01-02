@@ -1,9 +1,6 @@
 #include "app.h"
 #include "config.h"
 #include <stdlib.h>
-#ifdef PONG_DEBUG
-#include <stdio.h>
-#endif
 
 // declaration static functions.
 static void settingApp(void);
@@ -36,7 +33,7 @@ void freeApp(App **app) {
     free(*app);
     *app = NULL;
     #ifdef PONG_DEBUG
-    printf("deleted app.\n");
+    TraceLog(LOG_INFO, "xxx App DELETED.");
     #endif
   }
 }
