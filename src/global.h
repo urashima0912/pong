@@ -12,6 +12,7 @@ typedef struct Colors {
 
 typedef struct Global {
   Colors colors;
+  bool showCollisionShape;
 } Global;
 
 Colors getPocketGB(void);

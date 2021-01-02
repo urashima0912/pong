@@ -7,12 +7,13 @@
 extern "C" {
 #endif
 
-#define PONG_SCREEN_WIDTH 640
-#define PONG_SCREEN_HEIGHT 480
+#define PONG_SCREEN_WIDTH 480
+#define PONG_SCREEN_HEIGHT 360
 #define PONG_SCREEN_TITLE "Pong!"
 
+#define PONG_COLOR_SHAPE BLUE
+
 #define PONG_DEBUG 1
-// #define PONG_PIVOT 1
 
 #ifdef __cplusplus
 }

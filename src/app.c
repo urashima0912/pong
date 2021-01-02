@@ -18,7 +18,7 @@ App *initApp(void) {
     return NULL;
   }
   settingApp();
-  globalData.colors = getRusticGB();
+  globalData.colors = getPocketGB();
   app->sceneHandler = initSceneHandler();
   return app;
 }
@@ -51,6 +51,10 @@ static void settingApp(void) {
 
 static void updateApp(App *const app) {
   updateSceneHandler(app->sceneHandler);
+
+  if (IsKeyPressed(KEY_F1)) {
+    globalData.showCollisionShape = !globalData.showCollisionShape;
+  }
 }
 
 static void drawApp(const App *const app) {

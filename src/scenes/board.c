@@ -11,6 +11,7 @@ static bool checkCollisionLimit(const Ball *const ball, const Rectangle limit);
 static void checkCollisions(Board *const board);
 static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy);
 static void drawCounter(void);
+static void drawLimits(const Board *const board);
 
 static bool showCounter = false;
 static const int32_t MAX_COUNTER = 4;
@@ -70,9 +71,7 @@ void drawBoard(const Board *const board) {
   drawPalette(board->enemy);
   drawDivider();
   drawBall(board->ball);
-
-  DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
-  DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
+  drawLimits(board);
   drawPoints(board->ptoPlayer, board->ptoEnemy);
 
   if (showCounter) {
@@ -171,5 +170,27 @@ static void drawCounter (void) {
     showCounter = false;
     counter = MAX_COUNTER;
     prevCounter = 0;
+  }
+}
+
+static void drawLimits(const Board *const board) {
+  if (globalData.showCollisionShape) {
+    DrawRectangleLines(
+      board->limitRecLeft.x,
+      board->limitRecLeft.y,
+      board->limitRecLeft.width,
+      board->limitRecLeft.height,
+      PONG_COLOR_SHAPE
+    );
+    DrawRectangleLines(
+      board->limitRecRight.x,
+      board->limitRecRight.y,
+      board->limitRecRight.width,
+      board->limitRecRight.height,
+      PONG_COLOR_SHAPE
+    );
+  } else {
+    // DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
+    // DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
   }
 }

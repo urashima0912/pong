@@ -17,9 +17,7 @@ static const float SPEED = 5.2;
 static bool canGetDown(Palette *palette);
 static bool canGetUp(Palette *palette);
 static void getEvent(Palette *palette);
-#ifdef PONG_PIVOT
 static void showShapeArea(const Palette *const palette);
-#endif
 
 // implementation of public methods.
 Palette *initPalette(Vector2 position, bool isEnemy) {
@@ -37,17 +35,18 @@ Palette *initPalette(Vector2 position, bool isEnemy) {
 }
 
 void drawPalette(const Palette *const palette) {
-  DrawRectangle(
-    palette->position.x,
-    palette->position.y,
-    palette->size.x,
-    palette->size.y,
-    palette->color
-  );
-  #ifdef PONG_PIVOT
+  if (globalData.showCollisionShape) {
     drawPivot(palette->position);
     showShapeArea(palette);
-  #endif
+  } else {
+    DrawRectangle(
+      palette->position.x,
+      palette->position.y,
+      palette->size.x,
+      palette->size.y,
+      palette->color
+    );
+  }
 }
 
 void updatePalette(Palette *palette) {
@@ -100,14 +99,12 @@ static void getEvent(Palette *palette) {
   palette->position.y += palette->velocity.y * SPEED;
 }
 
-#ifdef PONG_PIVOT
 static void showShapeArea(const Palette *const palette) {
   DrawRectangleLines(
     palette->position.x,
     palette->position.y,
     palette->size.x,
     palette->size.y,
-    BLUE
+    PONG_COLOR_SHAPE
   );
 }
-#endif

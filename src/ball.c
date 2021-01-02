@@ -12,9 +12,7 @@ static const float SPEED = 5.3;
 static const int32_t SIZE = 10;
 
 // declaration static functions.
-#ifdef PONG_PIVOT
 static void showShapeBall(const Ball *const ball);
-#endif
 static bool collisionPalette(const Ball *const ball, const Palette *const palette);
 static void changeBallVelocity(Ball *const ball, const Palette *const palette);
 
@@ -31,18 +29,18 @@ Ball* initBall(void) {
 }
 
 void drawBall(const Ball *const ball) {
-  DrawRectangle(
-    ball->position.x,
-    ball->position.y,
-    ball->size.x,
-    ball->size.y,
-    globalData.colors.color3
-  );
-
-  #ifdef PONG_PIVOT
-  showShapeBall(ball);
-  drawPivot(ball->position);
-  #endif
+  if (globalData.showCollisionShape) {
+    showShapeBall(ball);
+    drawPivot(ball->position);
+  } else {
+    DrawRectangle(
+      ball->position.x,
+      ball->position.y,
+      ball->size.x,
+      ball->size.y,
+      globalData.colors.color3
+    );
+  }
 }
 
 void updateBall(Ball *ball, const Palette *const player, const Palette *const enemy) {
@@ -84,17 +82,15 @@ void resetBall(Ball *const ball) {
 
 
 // implementation static functions.
-#ifdef PONG_PIVOT
 static void showShapeBall(const Ball *const ball) {
   DrawRectangleLines(
     ball->position.x,
     ball->position.y,
     ball->size.x,
     ball->size.y,
-    BLUE
+    PONG_COLOR_SHAPE
   );
 }
-#endif
 
 static bool collisionPalette(const Ball *const ball, const Palette *const palette) {
   const Rectangle recBall = (Rectangle) {
