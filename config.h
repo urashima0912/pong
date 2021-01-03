@@ -14,6 +14,8 @@ extern "C" {
 #define PONG_COLOR_SHAPE BLUE
 
 #define PONG_MSG_WINNER "Winner!!"
+#define PONG_MSG_START "START"
+#define PONG_MSG_EXIT "EXIT"
 
 #define PONG_SCENE_OPTIONS_DELETED "-->\t Options DELETED."
 #define PONG_SCENE_MENU_DELETED "-->\t Menu DELETED."

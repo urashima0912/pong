@@ -1,6 +1,8 @@
 #ifndef PONG_SCENE_HANDLER_H
 #define PONG_SCENE_HANDLER_H
 
+#include <raylib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23,6 +25,8 @@ void updateSceneHandler(SceneHandler *const handler);
 void drawSceneHandler(const SceneHandler *const handler);
 
 void freeScenehandler(SceneHandler **handler);
+
+bool finishSceneHanlder(void);
 
 #ifdef __cplusplus
 }

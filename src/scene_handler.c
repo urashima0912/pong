@@ -7,6 +7,8 @@
 
 
 // declaration static functions.
+static bool finished = false;
+
 static void loadScene(SceneHandler *handler, ScenesTypes type);
 static Menu *loadMenuScene(void);
 static Board *loadBoardScene(void);
@@ -24,7 +26,7 @@ SceneHandler *initSceneHandler(void) {
   }
 
   handler->scene = NULL;
-  loadScene(handler, SCENE_BOARD);
+  loadScene(handler, SCENE_MENU);
 
   return handler;
 }
@@ -47,6 +49,11 @@ void freeScenehandler(SceneHandler **handler) {
     #endif
   }
 }
+
+bool finishSceneHanlder(void) {
+  return finished;
+}
+
 
 // implementation static functions.
 static void loadScene(SceneHandler *handler, ScenesTypes type) {
@@ -92,6 +99,14 @@ static void updateScene(SceneHandler *handler) {
   switch (handler->type) {
     case SCENE_MENU:
       updateMenu((Menu *)handler->scene);
+      const OptionEvent event = finishMenu();
+      if (event!= OPT_EMPTY) {
+        if (event == OPT_START) {
+          loadScene(handler, SCENE_BOARD);
+        } else if (event == OPT_EXIT) {
+          finished = true;
+        }
+      }
       break;
     case SCENE_BOARD:
       updateBoard((Board *)handler->scene);

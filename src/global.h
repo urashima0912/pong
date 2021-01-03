@@ -4,6 +4,12 @@
 #include <raylib.h>
 #include <stdint.h>
 
+typedef enum OptionEvent {
+  OPT_EMPTY = -1,
+  OPT_START = 0,
+  OPT_EXIT
+} OptionEvent;
+
 typedef struct Colors {
   Color color0;
   Color color1;

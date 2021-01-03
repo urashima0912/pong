@@ -4,6 +4,8 @@
 #include <stdlib.h>
 
 // declaration static functions.
+static bool finished = false;
+
 static void settingApp(void);
 static void updateApp(App *const app);
 static void drawApp(const App *const app);
@@ -27,7 +29,7 @@ App *initApp(void) {
 }
 
 void runApp(App *const app) {
-  while (!WindowShouldClose()) {
+  while (!WindowShouldClose() && !finished) {
     updateApp(app);
     drawApp(app);
   }
@@ -59,6 +61,8 @@ static void updateApp(App *const app) {
   if (IsKeyPressed(KEY_F1)) {
     globalData.showCollisionShape = !globalData.showCollisionShape;
   }
+
+  finished = finishSceneHanlder();
 }
 
 static void drawApp(const App *const app) {
