@@ -9,11 +9,12 @@ extern "C" {
 
 typedef enum OptionItems {
   ITEM_PTOS = 0,
+  ITEM_THEME,
   ITEM_GAME_MODE,
 } OptionItems;
 
 typedef struct Options {
-  // to do.
+  OptionItems item;
 } Options;
 
 Options *initOptions(void);
