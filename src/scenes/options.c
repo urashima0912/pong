@@ -24,7 +24,7 @@ void freeOptions(Options **options) {
     free(*options);
     *options = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx Options DELETED.");
+    TraceLog(LOG_INFO, PONG_SCENE_OPTIONS_DELETED);
     #endif
   }
 }

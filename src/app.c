@@ -39,7 +39,7 @@ void freeApp(App **app) {
     free(*app);
     *app = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx App DELETED.");
+    TraceLog(LOG_INFO, PONG_APP_DELETED);
     #endif
   }
 }

@@ -58,7 +58,7 @@ void freePalette(Palette **palette) {
     free(*palette);
     *palette = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx Palette DELETED.");
+    TraceLog(LOG_INFO, PONG_PALETTE_DELETED);
     #endif
   }
 }

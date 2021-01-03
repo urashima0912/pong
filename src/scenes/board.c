@@ -98,7 +98,7 @@ void freeBoard(Board **board) {
     free(*board);
     *board = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx Board DELETED.");
+    TraceLog(LOG_INFO, PONG_BOARD_DELETED);
     #endif
   }
 }
@@ -228,7 +228,7 @@ static void drawWinner(const Board *const board) {
 
   DrawRectangleRec(rec, Fade(globalData.colors.color1, 0.95));
 
-  const char *msg = "Winner!!";
+  const char *msg = PONG_MSG_WINNER;
   const int32_t fontSize = 32;
   const int32_t posX = middleScreen - (TextLength(msg) * (fontSize / 2)) / 2;
   const int32_t posY = GetScreenHeight() / 2;

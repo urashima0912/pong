@@ -43,7 +43,7 @@ void freeScenehandler(SceneHandler **handler) {
     free(*handler);
     handler = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx SceneHandler DELETED.");
+    TraceLog(LOG_INFO, PONG_SCENE_HANDLER_DELETED);
     #endif
   }
 }

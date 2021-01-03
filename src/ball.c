@@ -66,7 +66,7 @@ void freeBall(Ball **ball) {
     free(*ball);
     *ball = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx Ball DELETED.");
+    TraceLog(LOG_INFO, PONG_BALL_DELETED);
     #endif
   }
 }

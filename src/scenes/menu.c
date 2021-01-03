@@ -23,7 +23,7 @@ void freeMenu(Menu **menu) {
     free(*menu);
     *menu = NULL;
     #ifdef PONG_DEBUG
-    TraceLog(LOG_INFO, "xxx Menu DELETED.");
+    TraceLog(LOG_INFO, PONG_SCENE_MENU_DELETED);
     #endif
   }
 }
