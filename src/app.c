@@ -22,7 +22,7 @@ App *initApp(void) {
   }
   settingApp();
 
-  globalData.colors = getCrimsonGB();
+  globalData.colors = getPocketGB();
   globalData.maxPtos = 5;
 
   app->sceneHandler = initSceneHandler();

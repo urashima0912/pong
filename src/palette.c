@@ -9,7 +9,7 @@ extern Global globalData;
 
 // constants and variables.
 static const int32_t PALETTE_WIDTH = 15.0;
-static const int32_t PALETTE_HEIGHT = 100.0;
+static const int32_t PALETTE_HEIGHT = 80.0;
 static const float SPEED = 5.2;
 
 

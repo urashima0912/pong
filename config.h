@@ -7,8 +7,8 @@
 extern "C" {
 #endif
 
-#define PONG_SCREEN_WIDTH 640
-#define PONG_SCREEN_HEIGHT 480
+#define PONG_SCREEN_WIDTH 480
+#define PONG_SCREEN_HEIGHT 360
 #define PONG_SCREEN_TITLE "Pong!"
 
 #define PONG_COLOR_SHAPE BLUE
@@ -16,6 +16,7 @@ extern "C" {
 #define PONG_MSG_WINNER "Winner!!"
 #define PONG_MSG_START "START"
 #define PONG_MSG_EXIT "EXIT"
+#define PONG_DEVELOPED_BY "developed by kenshin urashima 2021"
 
 #define PONG_SCENE_OPTIONS_DELETED "-->\t Options DELETED."
 #define PONG_SCENE_MENU_DELETED "-->\t Menu DELETED."
