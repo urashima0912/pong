@@ -10,6 +10,7 @@ static OptionEvent onOptionEvent = OPT_EMPTY;
 static void updateMenuOptions(Menu *const menu);
 static void drawMenuOptions(const Menu *const menu);
 static void drawMenuInfo(void);
+static void drawTitle(void);
 
 Menu *initMenu(void) {
   onOptionEvent = OPT_EMPTY;
@@ -40,6 +41,7 @@ void updateMenu(Menu *const menu) {
 }
 
 void drawMenu(const Menu *const menu) {
+  drawTitle();
   drawMenuOptions(menu);
   drawMenuInfo();
 }
@@ -62,7 +64,7 @@ static void drawMenuOptions(const Menu *const menu) {
   const int32_t middleWidth = GetScreenWidth() / 2;
   const int32_t middleHeight = GetScreenHeight() / 2;
   const int32_t fontSize = 24;
-  const int32_t posY = middleHeight + 30;
+  const int32_t posY = middleHeight + 50;
   const int32_t posXStart = middleWidth - (TextLength(PONG_MSG_START) * (fontSize / 2)) / 2;
   const int32_t posXOptions = middleWidth - (TextLength(PONG_MSG_OPTIONS) * (fontSize / 2)) / 2;
   const int32_t posXExit = middleWidth - (TextLength(PONG_MSG_EXIT) * (fontSize / 2)) / 2;
@@ -104,3 +106,14 @@ static void drawMenuInfo(void) {
   DrawText(PONG_DEVELOPED_BY, posX, posY, fontSize, globalData.colors.color3);
 }
 
+static void drawTitle(void) {
+  const int32_t fontSize = 128;
+  const int32_t middle = GetScreenWidth() / 2;
+  const int32_t titleLen = TextLength(PONG_TITLE) * 64 + 18;
+  const int32_t posX = middle - TextLength(PONG_TITLE) * fontSize / 3; 
+  const int32_t posYBase = 20;
+  const int32_t posY = 30;
+  DrawRectangle(posX, posYBase + 20, posX + titleLen, 15, globalData.colors.color2);
+  DrawText(PONG_TITLE, posX, posYBase + posY, fontSize, globalData.colors.color1);
+  DrawRectangle(posX, posYBase + fontSize + 10, posX + titleLen, 15, globalData.colors.color2);
+}

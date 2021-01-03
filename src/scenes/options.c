@@ -1,11 +1,15 @@
 #include "options.h"
 #include "../../config.h"
+#include "../global.h"
 #include <stdlib.h>
+#include <stdint.h>
 
+extern Global globalData;
 
 static bool finished = false;
 
 static void resetValue(void);
+static void drawTitle(void);
 
 Options *initOptions(void) {
   resetValue();
@@ -23,7 +27,7 @@ void updateOptions(Options *const options) {
 }
 
 void drawOptions(const Options *const options) {
-  // to do.
+  drawTitle();
 }
 
 void freeOptions(Options **options) {
@@ -42,4 +46,12 @@ bool finishOptions(void) {
 
 static void resetValue(void) {
   finished = false;
+}
+
+static void drawTitle(void) {
+  const int32_t fontSize = 24;
+  const int32_t middle = GetScreenWidth() / 2;
+  const int32_t posX = middle - TextLength(PONG_OPTIONS_TITLE) * (fontSize / 2) / 2; 
+
+  DrawText(PONG_OPTIONS_TITLE, posX, 10, fontSize, globalData.colors.color2);
 }

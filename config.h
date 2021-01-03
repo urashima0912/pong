@@ -10,6 +10,8 @@ extern "C" {
 #define PONG_SCREEN_WIDTH 480
 #define PONG_SCREEN_HEIGHT 360
 #define PONG_SCREEN_TITLE "Pong!"
+#define PONG_TITLE "PONG"
+#define PONG_OPTIONS_TITLE "Options"
 
 #define PONG_COLOR_SHAPE BLUE
 

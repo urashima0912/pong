@@ -22,7 +22,7 @@ App *initApp(void) {
   }
   settingApp();
 
-  globalData.colors = getPocketGB();
+  globalData.colors = getRusticGB();
   globalData.maxPtos = 5;
 
   app->sceneHandler = initSceneHandler();

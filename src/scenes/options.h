@@ -7,6 +7,11 @@
 extern "C" {
 #endif
 
+typedef enum OptionItems {
+  ITEM_PTOS = 0,
+  ITEM_GAME_MODE,
+} OptionItems;
+
 typedef struct Options {
   // to do.
 } Options;
