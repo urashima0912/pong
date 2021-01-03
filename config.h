@@ -14,8 +14,9 @@ extern "C" {
 #define PONG_COLOR_SHAPE BLUE
 
 #define PONG_MSG_WINNER "Winner!!"
-#define PONG_MSG_START "START"
-#define PONG_MSG_EXIT "EXIT"
+#define PONG_MSG_START "start"
+#define PONG_MSG_OPTIONS "options"
+#define PONG_MSG_EXIT "exit"
 #define PONG_DEVELOPED_BY "developed by kenshin urashima 2021"
 
 #define PONG_SCENE_OPTIONS_DELETED "-->\t Options DELETED."

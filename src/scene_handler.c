@@ -104,6 +104,8 @@ static void updateScene(SceneHandler *handler) {
       if (event!= OPT_EMPTY) {
         if (event == OPT_START) {
           loadScene(handler, SCENE_BOARD);
+        } else if (event == OPT_OPTIONS) {
+          loadScene(handler, SCENE_OPTIONS);
         } else if (event == OPT_EXIT) {
           finished = true;
         }
@@ -117,6 +119,9 @@ static void updateScene(SceneHandler *handler) {
       break;
     case SCENE_OPTIONS:
       updateOptions((Options *)handler->scene);
+      if (finishOptions()) {
+        loadScene(handler, SCENE_MENU);
+      }
   }
 }
 

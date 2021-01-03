@@ -3,7 +3,12 @@
 #include <stdlib.h>
 
 
+static bool finished = false;
+
+static void resetValue(void);
+
 Options *initOptions(void) {
+  resetValue();
   Options *options = malloc(sizeof(Options));
   if (options == NULL) {
     return NULL;
@@ -12,7 +17,9 @@ Options *initOptions(void) {
 }
 
 void updateOptions(Options *const options) {
-  // to do.
+  if (IsKeyPressed(KEY_ESCAPE)) {
+    finished = true;
+  }
 }
 
 void drawOptions(const Options *const options) {
@@ -27,4 +34,12 @@ void freeOptions(Options **options) {
     TraceLog(LOG_INFO, PONG_SCENE_OPTIONS_DELETED);
     #endif
   }
+}
+
+bool finishOptions(void) {
+  return finished;
+}
+
+static void resetValue(void) {
+  finished = false;
 }

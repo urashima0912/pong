@@ -1,6 +1,8 @@
 #ifndef PONG_OPTIONS_H
 #define PONG_OPTIONS_H
 
+#include <raylib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -16,6 +18,8 @@ void updateOptions(Options *const options);
 void drawOptions(const Options *const options);
 
 void freeOptions(Options **options);
+
+bool finishOptions(void);
 
 #ifdef __cplusplus
 }

@@ -7,6 +7,7 @@
 typedef enum OptionEvent {
   OPT_EMPTY = -1,
   OPT_START = 0,
+  OPT_OPTIONS,
   OPT_EXIT
 } OptionEvent;
 

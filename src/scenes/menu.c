@@ -26,11 +26,16 @@ Menu *initMenu(void) {
 void updateMenu(Menu *const menu) {
   updateMenuOptions(menu);
 
-  if (IsKeyPressed(KEY_ENTER) && menu->option == OPT_START) {
-    onOptionEvent = OPT_START;
-  }
-  if (IsKeyPressed(KEY_ENTER) && menu->option == OPT_EXIT) {
-    onOptionEvent = OPT_EXIT;
+  if (IsKeyPressed(KEY_ENTER)) {
+    if (menu->option == OPT_START) {
+      onOptionEvent = OPT_START;
+    }
+    else if (menu->option == OPT_OPTIONS) {
+      onOptionEvent = OPT_OPTIONS;
+    }
+    else if (menu->option == OPT_EXIT) {
+      onOptionEvent = OPT_EXIT;
+    }
   }
 }
 
@@ -56,15 +61,19 @@ OptionEvent finishMenu(void) {
 static void drawMenuOptions(const Menu *const menu) {
   const int32_t middleWidth = GetScreenWidth() / 2;
   const int32_t middleHeight = GetScreenHeight() / 2;
-  const int32_t fontSize = 32;
-  const int32_t posY = middleHeight;
+  const int32_t fontSize = 24;
+  const int32_t posY = middleHeight + 30;
   const int32_t posXStart = middleWidth - (TextLength(PONG_MSG_START) * (fontSize / 2)) / 2;
+  const int32_t posXOptions = middleWidth - (TextLength(PONG_MSG_OPTIONS) * (fontSize / 2)) / 2;
   const int32_t posXExit = middleWidth - (TextLength(PONG_MSG_EXIT) * (fontSize / 2)) / 2;
 
   const Color startColor = (menu->option == OPT_START) ? globalData.colors.color3 : globalData.colors.color1;
+  const Color optionsColor = (menu->option == OPT_OPTIONS) ? globalData.colors.color3 : globalData.colors.color1;
   const Color endColor = (menu->option == OPT_EXIT) ? globalData.colors.color3 : globalData.colors.color1;
+
   DrawText(PONG_MSG_START, posXStart, posY, fontSize, startColor);
-  DrawText(PONG_MSG_EXIT, posXExit, posY + fontSize, fontSize, endColor);
+  DrawText(PONG_MSG_OPTIONS, posXOptions, posY + fontSize, fontSize, optionsColor);
+  DrawText(PONG_MSG_EXIT, posXExit, posY + (fontSize * 2), fontSize, endColor);
 }
 
 static void updateMenuOptions(Menu *const menu) {
