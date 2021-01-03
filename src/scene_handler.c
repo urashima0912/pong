@@ -20,6 +20,7 @@ static void drawScene(const SceneHandler *const handler);
 
 // implementation public functions.
 SceneHandler *initSceneHandler(void) {
+  finished = false;
   SceneHandler *handler = malloc(sizeof(SceneHandler)); 
   if (handler == NULL) {
     return NULL;
@@ -110,6 +111,9 @@ static void updateScene(SceneHandler *handler) {
       break;
     case SCENE_BOARD:
       updateBoard((Board *)handler->scene);
+      if (finishBoard()) {
+        loadScene(handler, SCENE_MENU);
+      }
       break;
     case SCENE_OPTIONS:
       updateOptions((Options *)handler->scene);

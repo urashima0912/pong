@@ -15,14 +15,15 @@ Global globalData = { 0 };
 
 // implementation public functions.
 App *initApp(void) {
+  finished = false;
   App *app = malloc(sizeof(App));
   if (app == NULL) {
     return NULL;
   }
   settingApp();
 
-  globalData.colors = getPocketGB();
-  globalData.maxPtos = 1;
+  globalData.colors = getCrimsonGB();
+  globalData.maxPtos = 5;
 
   app->sceneHandler = initSceneHandler();
   return app;

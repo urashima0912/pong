@@ -6,12 +6,12 @@
 
 extern Global globalData;
 
-OptionEvent onOptionEvent = OPT_EMPTY;
-
+static OptionEvent onOptionEvent = OPT_EMPTY;
 static void updateMenuOptions(Menu *const menu);
 static void drawMenuOptions(const Menu *const menu);
 
 Menu *initMenu(void) {
+  onOptionEvent = OPT_EMPTY;
   Menu *menu = malloc(sizeof(Menu));
   if (menu == NULL) {
     return NULL;

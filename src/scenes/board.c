@@ -6,6 +6,8 @@
 extern Global globalData;
 
 // declaration static functions.
+static bool finished = false;
+
 static void drawDivider(void);
 static bool checkCollisionLimit(const Ball *const ball, const Rectangle limit);
 static void checkCollisions(Board *const board);
@@ -13,6 +15,7 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy);
 static void drawCounter(void);
 static void drawLimits(const Board *const board);
 static void drawWinner(const Board *const board);
+static void resetValues(void);
 
 static bool showCounter = false;
 static const int32_t MAX_COUNTER = 4;
@@ -22,6 +25,7 @@ static bool someoneWon = false;
 
 // implementation public functions.
 Board *initBoard(void) {
+  resetValues();
   Board *board = malloc(sizeof(Board));
   if (board == NULL) {
     return NULL;
@@ -68,6 +72,10 @@ void updateBoard(Board *const board) {
       drawCounter();
     }
   }
+
+  if (IsKeyPressed(KEY_ESCAPE)) {
+    finished = true;
+  }
 }
 
 void drawBoard(const Board *const board) {
@@ -103,6 +111,9 @@ void freeBoard(Board **board) {
   }
 }
 
+bool finishBoard(void) {
+  return finished;
+}
 
 // implementation static functions.
 static void drawDivider(void) {
@@ -233,4 +244,12 @@ static void drawWinner(const Board *const board) {
   const int32_t posX = middleScreen - (TextLength(msg) * (fontSize / 2)) / 2;
   const int32_t posY = GetScreenHeight() / 2;
   DrawText(msg, posX, posY, fontSize, globalData.colors.color3);
+}
+
+static void resetValues(void) {
+  finished = false;
+  showCounter = false;
+  counter = MAX_COUNTER;
+  prevCounter = 0;
+  someoneWon = false;
 }

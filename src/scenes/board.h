@@ -30,6 +30,8 @@ void drawBoard(const Board *const board);
 
 void freeBoard(Board **board);
 
+bool finishBoard(void);
+
 #ifdef __cplusplus
 }
 #endif
