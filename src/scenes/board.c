@@ -16,6 +16,7 @@ static void drawCounter(void);
 static void drawLimits(const Board *const board);
 static void drawWinner(const Board *const board);
 static void resetValues(void);
+static void drawCounterScreen(void);
 
 static bool showCounter = false;
 static const int32_t MAX_COUNTER = 4;
@@ -82,20 +83,15 @@ void drawBoard(const Board *const board) {
   drawPalette(board->player);
   drawPalette(board->enemy);
   drawDivider();
-  drawBall(board->ball);
   drawLimits(board);
   drawPoints(board->ptoPlayer, board->ptoEnemy);
 
-  if (showCounter) {
-    const int32_t fontSize = 128;
-    const int32_t posX = GetScreenWidth() / 2 - (fontSize / 3);
-    const int32_t posY = GetScreenHeight() / 2 - (fontSize / 2);
-    DrawText(TextFormat("%d", counter), posX, posY, fontSize, globalData.colors.color1);
-  }
-
-  if (someoneWon) {
+  if (showCounter)
+    drawCounterScreen();
+  else if (someoneWon)
     drawWinner(board);
-  }
+  else
+    drawBall(board->ball);
 }
 
 void freeBoard(Board **board) {
@@ -171,7 +167,7 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     (middleWidth / 2) - lenStrPlayer,
     posY,
     fontSize,
-    globalData.colors.color3
+    globalData.colors.color2
   );
 
   DrawText(
@@ -179,7 +175,7 @@ static void drawPoints(const int32_t ptoPlayer, const int32_t ptoEnemy) {
     middleWidth + lenStrEnemy,
     posY,
     fontSize,
-    globalData.colors.color3
+    globalData.colors.color2
   );
 }
 
@@ -214,8 +210,8 @@ static void drawLimits(const Board *const board) {
       PONG_COLOR_SHAPE
     );
   } else {
-    // DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
-    // DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
+    DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
+    DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
   }
 }
 
@@ -241,8 +237,8 @@ static void drawWinner(const Board *const board) {
 
   const char *msg = PONG_MSG_WINNER;
   const int32_t fontSize = 32;
-  const int32_t posX = middleScreen - (TextLength(msg) * (fontSize / 2)) / 2;
-  const int32_t posY = GetScreenHeight() / 2;
+  const int32_t posX = middleScreen - MeasureText(msg, fontSize) / 2;
+  const int32_t posY = GetScreenHeight() / 2 - fontSize / 2;
   DrawText(msg, posX, posY, fontSize, globalData.colors.color3);
 }
 
@@ -252,4 +248,19 @@ static void resetValues(void) {
   counter = MAX_COUNTER;
   prevCounter = 0;
   someoneWon = false;
+}
+
+static void drawCounterScreen(void) {
+  DrawRectangle(
+    0,
+    0,
+    GetScreenWidth(),
+    GetScreenHeight(),
+    Fade(globalData.colors.color0, 0.6)
+  );
+  const int32_t fontSize = 128;
+  const char *value = TextFormat("%d", counter);
+  const int32_t posX = GetScreenWidth() / 2 - MeasureText(value, fontSize) / 2;
+  const int32_t posY = GetScreenHeight() / 2 - (fontSize / 2);
+  DrawText(value, posX, posY, fontSize, globalData.colors.color3);
 }

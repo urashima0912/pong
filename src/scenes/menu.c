@@ -9,7 +9,6 @@ extern Global globalData;
 static OptionEvent onOptionEvent = OPT_EMPTY;
 static void updateMenuOptions(Menu *const menu);
 static void drawMenuOptions(const Menu *const menu);
-static void drawMenuInfo(void);
 static void drawTitle(void);
 
 Menu *initMenu(void) {
@@ -43,7 +42,7 @@ void updateMenu(Menu *const menu) {
 void drawMenu(const Menu *const menu) {
   drawTitle();
   drawMenuOptions(menu);
-  drawMenuInfo();
+  drawMenuInfo(globalData);
 }
 
 void freeMenu(Menu **menu) {
@@ -96,14 +95,6 @@ static void updateMenuOptions(Menu *const menu) {
       menu->option = OPT_START;
     }
   }
-}
-
-static void drawMenuInfo(void) {
-  const int32_t fontSize = 14;
-  const int32_t middleWidth = GetScreenWidth() / 2;
-  const int32_t posX = middleWidth - MeasureText(PONG_DEVELOPED_BY, fontSize) / 2;
-  const int32_t posY = GetScreenHeight() - 20;
-  DrawText(PONG_DEVELOPED_BY, posX, posY, fontSize, globalData.colors.color3);
 }
 
 static void drawTitle(void) {

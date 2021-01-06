@@ -46,4 +46,7 @@ Colors getRusticGB(void);
 Colors getMistGB(void);
 Colors getCrimsonGB(void);
 
+void initGlobal(Global *const globalData);
+void drawMenuInfo(Global globalData);
+
 #endif /* PONG_GLOBAL_H */

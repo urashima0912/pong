@@ -1,4 +1,5 @@
 #include "global.h"
+#include "../config.h"
 
 Colors getPocketGB(void) {
   Colors colors = {0};
@@ -34,4 +35,18 @@ Colors getCrimsonGB(void) {
   colors.color2 = (Color){ 186, 80, 68, 255 };
   colors.color3 = (Color){ 239, 249, 214, 255 };
   return colors;
+}
+
+void initGlobal(Global *const globalData) {
+    globalData->theme = THEME_MIST_GB;
+    globalData->mode = MODE_PVP;
+    globalData->ptos = 5;
+}
+
+void drawMenuInfo(Global globalData) {
+  const int32_t fontSize = 14;
+  const int32_t middleWidth = GetScreenWidth() / 2;
+  const int32_t posX = middleWidth - MeasureText(PONG_DEVELOPED_BY, fontSize) / 2;
+  const int32_t posY = GetScreenHeight() - 20;
+  DrawText(PONG_DEVELOPED_BY, posX, posY, fontSize, globalData.colors.color3);
 }

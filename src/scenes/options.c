@@ -76,6 +76,7 @@ void drawOptions(const Options *const options) {
   drawOptionTheme(options, posY);
   posY += FONTSIZE + 10;
   drawOptionGameMode(options, posY);
+  drawMenuInfo(globalData);
 }
 
 void freeOptions(Options **options) {

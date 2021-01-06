@@ -23,10 +23,7 @@ App *initApp(void) {
   }
   settingApp();
 
-  globalData.theme = THEME_MIST_GB;
-  globalData.mode = MODE_PVP;
-  globalData.ptos = 5;
-
+  initGlobal(&globalData);
   app->sceneHandler = initSceneHandler();
   return app;
 }
