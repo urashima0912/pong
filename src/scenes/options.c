@@ -11,6 +11,7 @@ static bool finished = false;
 static const int32_t FONTSIZE = 24;
 static int32_t internalPto = 0;
 static GlTheme internalTheme = -1;
+static GlMode internalMode = -1;
 
 static void resetValue(void);
 static void drawTitle(void);
@@ -28,9 +29,14 @@ static void initTheme(void);
 static void freeTheme(void);
 static void updateTheme(const Options *const options);
 static void updateThemeData(void);
+static void updateMode(const Options *const options);
+static void updateModeData(void);
+static void initGameMode(void);
+static void freeGameMode(void);
 
 static char *ptoData = NULL;
 static char *themeData = NULL;
+static char *modeData = NULL;
 
 const static char *LEFT = "< ";
 const static char *RIGHT = " >";
@@ -45,6 +51,7 @@ Options *initOptions(void) {
 
   initPtos();
   initTheme();
+  initGameMode();
 
   options->item = ITEM_PTOS;
 
@@ -56,6 +63,8 @@ void updateOptions(Options *const options) {
   changeValueItem(options);
   updateTheme(options);
   updateThemeData();
+  updateMode(options);
+  updateModeData();
   closeOptions();
 }
 
@@ -73,6 +82,7 @@ void freeOptions(Options **options) {
   if (*options != NULL) {
     freePtos();
     freeTheme();
+    freeGameMode();
     free(*options);
     *options = NULL;
     #ifdef PONG_DEBUG
@@ -117,10 +127,9 @@ static void drawOptionTheme(const Options *const options, const int32_t posY) {
 
 static void drawOptionGameMode(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_GAME_MODE ? globalData.colors.color3 : globalData.colors.color1;
-  const char *value = PONG_OPTION_GAME_MODE_CPU;
   
   DrawText(PONG_OPTION_GAME_MODE, 10, posY, 24, selected);
-  DrawText(value, GetScreenWidth() - 24 * TextLength(value), posY, 24, selected);
+  DrawText(modeData, GetScreenWidth() - 24 * TextLength(modeData), posY, 24, selected);
 }
 
 static void updateItemSelected(Options *const options) {
@@ -209,6 +218,18 @@ static void freeTheme(void) {
   internalTheme = -1;
 }
 
+static void initGameMode(void) {
+  const int32_t size = 4;
+  modeData = malloc(sizeof(char) * size);
+  modeData[size - 1] = '\0';
+}
+
+static void freeGameMode(void) {
+  free(modeData);
+  modeData = NULL;
+  internalMode = -1;
+}
+
 static void updateTheme(const Options *const options) {
   if (options->item == ITEM_THEME) {
     const int32_t minTheme = (int32_t) THEME_POCKET_GB;
@@ -252,4 +273,33 @@ static void updateThemeData(void) {
       strcat(themeData, RIGHT);
     }
   }
+}
+
+static void updateMode(const Options *const options) {
+  if (options->item == ITEM_GAME_MODE) {
+    const int32_t mode = (int32_t)globalData.mode;
+    if (IsKeyPressed(KEY_LEFT) && mode == MODE_CPU) {
+      globalData.mode = MODE_PVP;
+    } else if (IsKeyPressed(KEY_RIGHT) && mode == MODE_PVP) {
+      globalData.mode = MODE_CPU;
+    }
+  }
+}
+
+
+static void updateModeData(void) {
+  if (internalMode != globalData.mode) {
+    internalMode = globalData.mode;
+    strcpy(modeData, "");
+    switch (internalMode) {
+      case MODE_PVP:
+        strcat(modeData, PONG_OPTION_GAME_MODE_PVP);
+        strcat(modeData, RIGHT);
+        break;
+      case MODE_CPU:
+        strcat(modeData, LEFT);
+        strcat(modeData, PONG_OPTION_GAME_MODE_CPU);
+        break;
+    }
+  } 
 }

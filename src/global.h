@@ -7,6 +7,11 @@
 const static int32_t GL_MIN_PTO = 5;
 const static int32_t GL_MAX_PTO = 10;
 
+
+typedef enum GlMode {
+  MODE_PVP = 0,
+  MODE_CPU
+} GlMode;
 typedef enum GlTheme {
   THEME_POCKET_GB = 0,
   THEME_RUSTIC_GB,
@@ -29,6 +34,7 @@ typedef struct Colors {
 } Colors;
 
 typedef struct Global {
+  GlMode mode;
   GlTheme theme;
   Colors colors;
   bool showCollisionShape;
