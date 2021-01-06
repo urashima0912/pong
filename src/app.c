@@ -5,6 +5,7 @@
 
 // declaration static functions.
 static bool finished = false;
+static bool showFPS = false;
 
 static void settingApp(void);
 static void updateFullScreen(void);
@@ -12,6 +13,8 @@ static void updateApp(App *const app);
 static void drawApp(const App *const app);
 static void freeInternalApp(App *app);
 static void updateTheme(void);
+static void drawFPS(void);
+static void getEvent(void);
 
 Global globalData = { 0 };
 
@@ -59,11 +62,7 @@ static void updateApp(App *const app) {
   updateTheme();
   updateFullScreen();
   updateSceneHandler(app->sceneHandler);
-
-  if (IsKeyPressed(KEY_F1)) {
-    globalData.showCollisionShape = !globalData.showCollisionShape;
-  }
-
+  getEvent();
   finished = finishSceneHanlder();
 }
 
@@ -71,6 +70,7 @@ static void drawApp(const App *const app) {
   BeginDrawing();
   ClearBackground(globalData.colors.color0);
   drawSceneHandler(app->sceneHandler);
+  drawFPS();
   EndDrawing();
 }
 
@@ -105,5 +105,21 @@ static void updateFullScreen(void) {
     ToggleFullscreen();
   } else if (!globalData.fullScreen && IsWindowFullscreen()) {
     ToggleFullscreen();
+  }
+}
+
+static void drawFPS(void) {
+  if (showFPS) {
+    const char *strFPS = TextFormat("FPS: %d", GetFPS());
+    DrawText(strFPS, 10, 10, 24, GREEN);
+  }
+}
+
+static void getEvent(void) {
+  if (IsKeyPressed(KEY_F1)) {
+    globalData.showCollisionShape = !globalData.showCollisionShape;
+  }
+  if (IsKeyPressed(KEY_F2)) {
+    showFPS = !showFPS;
   }
 }

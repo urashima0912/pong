@@ -92,8 +92,8 @@ static void getEvent(Palette *palette) {
     moveUp = canGetUp(palette) && IsKeyDown(KEY_W);
     moveDown = canGetDown(palette) && IsKeyDown(KEY_S);
   } else if (globalData.mode == MODE_CPU) {
-    moveUp = canGetUp(palette) && IsKeyDown(KEY_UP);
-    moveDown = canGetDown(palette) && IsKeyDown(KEY_DOWN);
+    moveUp = canGetUp(palette) && (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W));
+    moveDown = canGetDown(palette) && (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S));
   }
 
   move(palette, moveUp, moveDown);
