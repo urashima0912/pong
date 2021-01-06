@@ -1,7 +1,6 @@
 #include "palette.h"
 #include "../config.h"
 #include "pivot.h"
-#include "global.h"
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -18,6 +17,8 @@ static bool canGetDown(Palette *palette);
 static bool canGetUp(Palette *palette);
 static void getEvent(Palette *palette);
 static void showShapeArea(const Palette *const palette);
+static void enemyIA(Palette *const palette, const GameObject gameObject);
+static void move(Palette *const palette, const bool moveUp, const bool moveDown);
 
 // implementation of public methods.
 Palette *initPalette(Vector2 position, bool isEnemy) {
@@ -49,8 +50,12 @@ void drawPalette(const Palette *const palette) {
   }
 }
 
-void updatePalette(Palette *palette) {
-  getEvent(palette);
+void updatePalette(Palette *const palette, const GameObject gameObject) {
+  if (!palette->isEnemy || (palette->isEnemy && globalData.mode == MODE_PVP)) {
+    getEvent(palette);
+  } else if (palette->isEnemy && globalData.mode == MODE_CPU) {
+    enemyIA(palette, gameObject);
+  }
 }
 
 void freePalette(Palette **palette) {
@@ -88,15 +93,7 @@ static void getEvent(Palette *palette) {
     moveDown = canGetDown(palette) && IsKeyDown(KEY_S);
   }
 
-  if (moveUp) {
-    palette->velocity.y = -1;
-  } else if (moveDown) {
-    palette->velocity.y = 1;
-  } else {
-    palette->velocity.y = 0;
-  }
-
-  palette->position.y += palette->velocity.y * SPEED;
+  move(palette, moveUp, moveDown);
 }
 
 static void showShapeArea(const Palette *const palette) {
@@ -107,4 +104,31 @@ static void showShapeArea(const Palette *const palette) {
     palette->size.y,
     PONG_COLOR_SHAPE
   );
+}
+
+static void enemyIA(Palette *const palette, const GameObject gameObject) {
+  bool moveUp = false;
+  bool moveDown = false;
+  bool canMove = gameObject.velocity.x > 0;
+  const int32_t diff = 20;
+  if (canMove) {
+    if (gameObject.position.y < palette->position.y + diff) {
+      moveUp = canGetUp(palette);
+    } else if (gameObject.position.y > palette->position.y + palette->size.y - diff) {
+      moveDown = canGetDown(palette);
+    }
+  }
+  move(palette, moveUp, moveDown);
+}
+
+static void move(Palette *const palette, const bool moveUp, const bool moveDown) {
+  if (moveUp) {
+    palette->velocity.y = -1;
+  } else if (moveDown) {
+    palette->velocity.y = 1;
+  } else {
+    palette->velocity.y = 0;
+  }
+
+  palette->position.y += palette->velocity.y * SPEED;
 }

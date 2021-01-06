@@ -26,6 +26,12 @@ typedef enum OptionEvent {
   OPT_EXIT
 } OptionEvent;
 
+typedef struct GameObject {
+  Vector2 position;
+  Vector2 size;
+  Vector2 velocity;
+} GameObject;
+
 typedef struct Colors {
   Color color0;
   Color color1;

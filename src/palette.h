@@ -2,6 +2,7 @@
 #define PONG_PALETTE_H
 
 #include <raylib.h>
+#include "global.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,7 +22,7 @@ Palette *initPalette(Vector2 position, bool isEnemy);
 
 void drawPalette(const Palette *const palette);
 
-void updatePalette(Palette *palette);
+void updatePalette(Palette *const palette, const GameObject gameObject);
 
 void freePalette(Palette **palette);
 

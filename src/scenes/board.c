@@ -17,6 +17,7 @@ static void drawLimits(const Board *const board);
 static void drawWinner(const Board *const board);
 static void resetValues(void);
 static void drawCounterScreen(void);
+static GameObject getGameObjectFromBall(const Board *const board);
 
 static bool showCounter = false;
 static const int32_t MAX_COUNTER = 4;
@@ -65,8 +66,9 @@ Board *initBoard(void) {
 void updateBoard(Board *const board) {
   if (!someoneWon) {
     if (!showCounter) {
-      updatePalette(board->player);
-      updatePalette(board->enemy);
+      const GameObject gameObject = getGameObjectFromBall(board);
+      updatePalette(board->player, gameObject);
+      updatePalette(board->enemy, gameObject);
       updateBall(board->ball, board->player, board->enemy);
       checkCollisions(board);
     } else {
@@ -263,4 +265,12 @@ static void drawCounterScreen(void) {
   const int32_t posX = GetScreenWidth() / 2 - MeasureText(value, fontSize) / 2;
   const int32_t posY = GetScreenHeight() / 2 - (fontSize / 2);
   DrawText(value, posX, posY, fontSize, globalData.colors.color3);
+}
+
+static GameObject getGameObjectFromBall(const Board *const board) {
+  return (GameObject){
+    board->ball->position,
+    board->ball->size,
+    board->ball->velocity
+  };
 }
