@@ -101,7 +101,7 @@ static void updateMenuOptions(Menu *const menu) {
 static void drawMenuInfo(void) {
   const int32_t fontSize = 14;
   const int32_t middleWidth = GetScreenWidth() / 2;
-  const int32_t posX = middleWidth - TextLength(PONG_DEVELOPED_BY) * (fontSize / 2) / 2;
+  const int32_t posX = middleWidth - MeasureText(PONG_DEVELOPED_BY, fontSize) / 2;
   const int32_t posY = GetScreenHeight() - 20;
   DrawText(PONG_DEVELOPED_BY, posX, posY, fontSize, globalData.colors.color3);
 }
@@ -109,11 +109,12 @@ static void drawMenuInfo(void) {
 static void drawTitle(void) {
   const int32_t fontSize = 128;
   const int32_t middle = GetScreenWidth() / 2;
-  const int32_t titleLen = TextLength(PONG_TITLE) * 64 + 18;
-  const int32_t posX = middle - TextLength(PONG_TITLE) * fontSize / 3; 
+  const int32_t titleLen = MeasureText(PONG_TITLE, fontSize);
+  const int32_t posX = middle - titleLen / 2; 
   const int32_t posYBase = 20;
   const int32_t posY = 30;
-  DrawRectangle(posX, posYBase + 20, posX + titleLen, 15, globalData.colors.color2);
+  const int32_t height = 15;
+  DrawRectangle(posX, posYBase + 20, titleLen, height, globalData.colors.color2);
   DrawText(PONG_TITLE, posX, posYBase + posY, fontSize, globalData.colors.color1);
-  DrawRectangle(posX, posYBase + fontSize + 10, posX + titleLen, 15, globalData.colors.color2);
+  DrawRectangle(posX, posYBase + fontSize + 10, titleLen, height, globalData.colors.color2);
 }

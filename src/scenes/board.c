@@ -152,7 +152,7 @@ static void checkCollisions(Board *const board) {
     showCounter = true;
   }
 
-  if (board->ptoPlayer >= globalData.maxPtos || board->ptoEnemy >= globalData.maxPtos) {
+  if (board->ptoPlayer >= globalData.ptos || board->ptoEnemy >= globalData.ptos) {
     someoneWon = true;
     showCounter = false;
   }
@@ -223,13 +223,13 @@ static void drawWinner(const Board *const board) {
   Rectangle rec = (Rectangle){ 0 };
   int32_t middleScreen = GetScreenWidth() / 4;
 
-  if (board->ptoPlayer >= globalData.maxPtos) {
+  if (board->ptoPlayer >= globalData.ptos) {
     rec.x = 0;
     rec.y = 0;
     rec.width = GetScreenWidth() / 2;
     rec.height = GetScreenHeight();
 
-  } else if (board->ptoEnemy >= globalData.maxPtos) {
+  } else if (board->ptoEnemy >= globalData.ptos) {
     rec.x = GetScreenWidth() / 2;
     rec.y = 0;
     rec.width = GetScreenWidth() / 2;

@@ -3,11 +3,13 @@
 #include "../global.h"
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 extern Global globalData;
 
 static bool finished = false;
 static const int32_t FONTSIZE = 24;
+static int32_t internalPto = 0;
 
 static void resetValue(void);
 static void drawTitle(void);
@@ -15,7 +17,13 @@ static void drawOptionPtos(const Options *const options, const int32_t posY);
 static void drawOptionTheme(const Options *const options, const int32_t posY);
 static void drawOptionGameMode(const Options *const options, const int32_t posY);
 static void updateItemSelected(Options *const options);
+static void closeOptions(void);
+static void changeValueItem(Options *const options);
+static void changePtos(void);
+static void updatePtos(void);
+static void initPtos(void);
 
+static char *ptoData = NULL;
 
 Options *initOptions(void) {
   resetValue();
@@ -24,6 +32,7 @@ Options *initOptions(void) {
     return NULL;
   }
 
+  initPtos();
   options->item = ITEM_PTOS;
 
   return options;
@@ -31,9 +40,8 @@ Options *initOptions(void) {
 
 void updateOptions(Options *const options) {
   updateItemSelected(options);
-  if (IsKeyPressed(KEY_ESCAPE)) {
-    finished = true;
-  }
+  changeValueItem(options);
+  closeOptions();
 }
 
 void drawOptions(const Options *const options) {
@@ -48,6 +56,9 @@ void drawOptions(const Options *const options) {
 
 void freeOptions(Options **options) {
   if (*options != NULL) {
+    internalPto = 0;
+    free(ptoData);
+    ptoData = NULL;
     free(*options);
     *options = NULL;
     #ifdef PONG_DEBUG
@@ -72,16 +83,19 @@ static void drawTitle(void) {
 }
 
 static void drawOptionPtos(const Options *const options, const int32_t posY) {
+  if (options->item == ITEM_PTOS) {
+    updatePtos();
+  }
   Color selected = options->item == ITEM_PTOS ? globalData.colors.color3 : globalData.colors.color1;
-  const char *value = TextFormat("< %d >", globalData.maxPtos);
+  const char *value = TextFormat("< %d >", globalData.ptos);
 
   DrawText(PONG_OPTION_MAX_PTOS, 10, posY, 24, selected);
-  DrawText(value, GetScreenWidth() - 24 * TextLength(value), posY, 24,selected);
+  DrawText(ptoData, GetScreenWidth() - 24 * TextLength(value), posY, 24,selected);
 }
 
 static void drawOptionTheme(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_THEME ? globalData.colors.color3 : globalData.colors.color1;
-  const char *value = TextFormat("POCKET", globalData.maxPtos);
+  const char *value = TextFormat("POCKET", globalData.ptos);
 
   DrawText("THEME:", 10, posY, 24, selected);
   DrawText(value, GetScreenWidth() - 24 * TextLength(value), posY, 24,selected);
@@ -114,4 +128,53 @@ static void updateItemSelected(Options *const options) {
       options->item = ITEM_PTOS;
     }
   }
+}
+
+static void closeOptions(void) {
+  if (IsKeyPressed(KEY_ESCAPE)) {
+    finished = true;
+  }
+}
+
+static void changeValueItem(Options *const options) {
+  const OptionItems item = options->item;
+  switch (item) {
+    case ITEM_PTOS:
+      changePtos();
+      break;
+    case ITEM_THEME:
+      break;
+    case ITEM_GAME_MODE:
+      break;
+  }
+}
+
+static void changePtos(void) {
+  const int32_t ptos = globalData.ptos;
+  if (IsKeyPressed(KEY_LEFT) && ptos > GL_MIN_PTO) {
+    globalData.ptos--;
+  } else if (IsKeyPressed(KEY_RIGHT) && ptos < GL_MAX_PTO) {
+    globalData.ptos++;
+  }
+}
+
+static void updatePtos(void) {
+  if (internalPto != globalData.ptos) {
+    internalPto = globalData.ptos;
+    strcpy(ptoData, "");
+    const char *num = TextFormat("%d", internalPto);
+    if (internalPto > GL_MIN_PTO) {
+      strcat(ptoData, "<");
+    }
+    strcat(ptoData, num);
+    if (internalPto < GL_MAX_PTO) {
+      strcat(ptoData, ">");
+    }
+  }
+}
+
+static void initPtos(void) {
+  const int32_t size = 5;
+  ptoData = malloc(sizeof(char) * size);
+  ptoData[size - 1] = '\0';
 }

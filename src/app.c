@@ -23,7 +23,7 @@ App *initApp(void) {
   settingApp();
 
   globalData.colors = getRusticGB();
-  globalData.maxPtos = 5;
+  globalData.ptos = 5;
 
   app->sceneHandler = initSceneHandler();
   return app;

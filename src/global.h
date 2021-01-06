@@ -4,6 +4,9 @@
 #include <raylib.h>
 #include <stdint.h>
 
+const static int32_t GL_MIN_PTO = 5;
+const static int32_t GL_MAX_PTO = 10;
+
 typedef enum OptionEvent {
   OPT_EMPTY = -1,
   OPT_START = 0,
@@ -21,7 +24,7 @@ typedef struct Colors {
 typedef struct Global {
   Colors colors;
   bool showCollisionShape;
-  int32_t maxPtos;
+  int32_t ptos;
 } Global;
 
 Colors getPocketGB(void);
