@@ -12,8 +12,10 @@ extern "C" {
 #define PONG_SCREEN_TITLE "Pong!"
 #define PONG_TITLE "PONG"
 #define PONG_OPTIONS_TITLE "Options"
+#define PONG_OPTION_THEME "THEME:"
 #define PONG_OPTION_MAX_PTOS "MAX PTOS:"
 #define PONG_OPTION_GAME_MODE "GAME MODE:"
+#define PONG_FULLSCREEN "FULLSCREEN:"
 #define PONG_OPTION_GAME_MODE_PVP "PVP"
 #define PONG_OPTION_GAME_MODE_CPU "CPU"
 
@@ -24,10 +26,10 @@ extern "C" {
 
 #define PONG_COLOR_SHAPE BLUE
 
-#define PONG_MSG_WINNER "Winner!!"
-#define PONG_MSG_START "start"
-#define PONG_MSG_OPTIONS "options"
-#define PONG_MSG_EXIT "exit"
+#define PONG_MSG_WINNER "WINNER"
+#define PONG_MSG_START "START"
+#define PONG_MSG_OPTIONS "OPTIONS"
+#define PONG_MSG_EXIT "EXIT"
 #define PONG_DEVELOPED_BY "developed by kenshin urashima 2021"
 
 #define PONG_SCENE_OPTIONS_DELETED "-->\t Options DELETED."

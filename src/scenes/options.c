@@ -18,6 +18,7 @@ static void drawTitle(void);
 static void drawOptionPtos(const Options *const options, const int32_t posY);
 static void drawOptionTheme(const Options *const options, const int32_t posY);
 static void drawOptionGameMode(const Options *const options, const int32_t posY);
+static void drawOptionFullScreen(const Options *const options, const int32_t posY);
 static void updateItemSelected(Options *const options);
 static void closeOptions(void);
 static void changeValueItem(Options *const options);
@@ -33,6 +34,7 @@ static void updateMode(const Options *const options);
 static void updateModeData(void);
 static void initGameMode(void);
 static void freeGameMode(void);
+static void updateFullScreen(const Options *const options);
 
 static char *ptoData = NULL;
 static char *themeData = NULL;
@@ -40,7 +42,8 @@ static char *modeData = NULL;
 
 const static char *LEFT = "< ";
 const static char *RIGHT = " >";
-const static int32_t DIFF_RIGHT = 20;
+const static int32_t DIFF_LEFT = 60;
+const static int32_t DIFF_RIGHT = 60;
 
 Options *initOptions(void) {
   resetValue();
@@ -65,6 +68,7 @@ void updateOptions(Options *const options) {
   updateThemeData();
   updateMode(options);
   updateModeData();
+  updateFullScreen(options);
   closeOptions();
 }
 
@@ -76,6 +80,8 @@ void drawOptions(const Options *const options) {
   drawOptionTheme(options, posY);
   posY += FONTSIZE + 10;
   drawOptionGameMode(options, posY);
+  posY += FONTSIZE + 10;
+  drawOptionFullScreen(options, posY);
   drawMenuInfo(globalData);
 }
 
@@ -112,44 +118,46 @@ static void drawOptionPtos(const Options *const options, const int32_t posY) {
     updatePtos();
   }
   Color selected = options->item == ITEM_PTOS ? globalData.colors.color3 : globalData.colors.color1;
-  const char *value = TextFormat("< %d >", globalData.ptos);
-  const int32_t fontSize = 24;
-
-  DrawText(PONG_OPTION_MAX_PTOS, 10, posY, fontSize, selected);
-  DrawText(ptoData, GetScreenWidth() - MeasureText(value, fontSize) - DIFF_RIGHT, posY, fontSize, selected);
+  DrawText(PONG_OPTION_MAX_PTOS, DIFF_LEFT, posY, FONTSIZE, selected);
+  DrawText(ptoData, GetScreenWidth() - MeasureText(ptoData, FONTSIZE) - DIFF_RIGHT, posY, FONTSIZE, selected);
 }
 
 static void drawOptionTheme(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_THEME ? globalData.colors.color3 : globalData.colors.color1;
-  const int32_t fontSize = 24;
-  DrawText("THEME:", 10, posY, fontSize, selected);
-  DrawText(themeData, GetScreenWidth() - MeasureText(themeData, fontSize) - DIFF_RIGHT, posY, fontSize,selected);
+  DrawText(PONG_OPTION_THEME, DIFF_LEFT, posY, FONTSIZE, selected);
+  DrawText(themeData, GetScreenWidth() - MeasureText(themeData, FONTSIZE) - DIFF_RIGHT, posY, FONTSIZE, selected);
 }
 
 static void drawOptionGameMode(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_GAME_MODE ? globalData.colors.color3 : globalData.colors.color1;
-  const int32_t fontSize = 24;
+  DrawText(PONG_OPTION_GAME_MODE, DIFF_LEFT, posY, FONTSIZE, selected);
+  DrawText(modeData, GetScreenWidth() - MeasureText(modeData, FONTSIZE) - DIFF_RIGHT, posY, FONTSIZE, selected);
+}
 
-  DrawText(PONG_OPTION_GAME_MODE, 10, posY, fontSize, selected);
-  DrawText(modeData, GetScreenWidth() - MeasureText(modeData, fontSize) - DIFF_RIGHT, posY, fontSize, selected);
+static void drawOptionFullScreen(const Options *const options, const int32_t posY) {
+  Color selected = options->item == ITEM_FULLSCREEN ? globalData.colors.color3 : globalData.colors.color1;
+  DrawText(PONG_FULLSCREEN, DIFF_LEFT, posY, FONTSIZE, selected);
+
+  const char *value = !globalData.fullScreen ? "FALSE >" : "< TRUE";
+  DrawText(value, GetScreenWidth() - MeasureText(value, FONTSIZE) - DIFF_RIGHT, posY, FONTSIZE, selected);
 }
 
 static void updateItemSelected(Options *const options) {
   const int32_t min = (int32_t) ITEM_PTOS;
-  const int32_t max = (int32_t) ITEM_GAME_MODE;
+  const int32_t max = (int32_t) ITEM_FULLSCREEN;
   if (IsKeyPressed(KEY_UP)) {
     const int32_t value = options->item - 1;
     if (value >= min) {
       options->item--;
     } else {
-      options->item = ITEM_GAME_MODE;
+      options->item = max;
     }
   } else if (IsKeyPressed(KEY_DOWN)) {
     const int32_t value = options->item + 1;
     if (value <= max) {
       options->item++;
     } else {
-      options->item = ITEM_PTOS;
+      options->item = min;
     }
   }
 }
@@ -162,14 +170,8 @@ static void closeOptions(void) {
 
 static void changeValueItem(Options *const options) {
   const OptionItems item = options->item;
-  switch (item) {
-    case ITEM_PTOS:
-      changePtos();
-      break;
-    case ITEM_THEME:
-      break;
-    case ITEM_GAME_MODE:
-      break;
+  if (item == ITEM_PTOS) {
+    changePtos();
   }
 }
 
@@ -207,6 +209,9 @@ static void freePtos(void) {
   internalPto = 0;
   free(ptoData);
   ptoData = NULL;
+  #ifdef PONG_DEBUG
+    TraceLog(LOG_INFO, "->\t deleted ptoData.");
+  #endif
 }
 
 static void initTheme(void) {
@@ -218,6 +223,9 @@ static void freeTheme(void) {
   free(themeData);
   themeData = NULL;
   internalTheme = -1;
+  #ifdef PONG_DEBUG
+    TraceLog(LOG_INFO, "->\t deleted themeData.");
+  #endif
 }
 
 static void initGameMode(void) {
@@ -230,6 +238,9 @@ static void freeGameMode(void) {
   free(modeData);
   modeData = NULL;
   internalMode = -1;
+  #ifdef PONG_DEBUG
+    TraceLog(LOG_INFO, "->\t deleted modeData.");
+  #endif
 }
 
 static void updateTheme(const Options *const options) {
@@ -304,4 +315,14 @@ static void updateModeData(void) {
         break;
     }
   } 
+}
+
+static void updateFullScreen(const Options *const options) {
+  if (options->item == ITEM_FULLSCREEN) {
+    if (IsKeyPressed(KEY_LEFT) && globalData.fullScreen) {
+      globalData.fullScreen = false;
+    } else if (IsKeyPressed(KEY_RIGHT) && !globalData.fullScreen) {
+      globalData.fullScreen = true;
+    }
+  }
 }

@@ -41,6 +41,7 @@ void initGlobal(Global *const globalData) {
     globalData->theme = THEME_MIST_GB;
     globalData->mode = MODE_PVP;
     globalData->ptos = 5;
+    globalData->fullScreen = false;
 }
 
 void drawMenuInfo(Global globalData) {

@@ -7,6 +7,7 @@
 static bool finished = false;
 
 static void settingApp(void);
+static void updateFullScreen(void);
 static void updateApp(App *const app);
 static void drawApp(const App *const app);
 static void freeInternalApp(App *app);
@@ -22,7 +23,6 @@ App *initApp(void) {
     return NULL;
   }
   settingApp();
-
   initGlobal(&globalData);
   app->sceneHandler = initSceneHandler();
   return app;
@@ -57,6 +57,7 @@ static void settingApp(void) {
 
 static void updateApp(App *const app) {
   updateTheme();
+  updateFullScreen();
   updateSceneHandler(app->sceneHandler);
 
   if (IsKeyPressed(KEY_F1)) {
@@ -96,5 +97,13 @@ static void updateTheme(void) {
         globalData.colors = getCrimsonGB();
         break;
     }
+  }
+}
+
+static void updateFullScreen(void) {
+  if (globalData.fullScreen && !IsWindowFullscreen()) {
+    ToggleFullscreen();
+  } else if (!globalData.fullScreen && IsWindowFullscreen()) {
+    ToggleFullscreen();
   }
 }
