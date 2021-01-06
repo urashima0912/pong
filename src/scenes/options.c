@@ -10,6 +10,7 @@ extern Global globalData;
 static bool finished = false;
 static const int32_t FONTSIZE = 24;
 static int32_t internalPto = 0;
+static GlTheme internalTheme = -1;
 
 static void resetValue(void);
 static void drawTitle(void);
@@ -22,8 +23,18 @@ static void changeValueItem(Options *const options);
 static void changePtos(void);
 static void updatePtos(void);
 static void initPtos(void);
+static void freePtos(void);
+static void initTheme(void);
+static void freeTheme(void);
+static void updateTheme(const Options *const options);
+static void updateThemeData(void);
 
 static char *ptoData = NULL;
+static char *themeData = NULL;
+
+const static char *LEFT = "< ";
+const static char *RIGHT = " >";
+const static int32_t DIFF_RIGHT = 20;
 
 Options *initOptions(void) {
   resetValue();
@@ -33,6 +44,8 @@ Options *initOptions(void) {
   }
 
   initPtos();
+  initTheme();
+
   options->item = ITEM_PTOS;
 
   return options;
@@ -41,6 +54,8 @@ Options *initOptions(void) {
 void updateOptions(Options *const options) {
   updateItemSelected(options);
   changeValueItem(options);
+  updateTheme(options);
+  updateThemeData();
   closeOptions();
 }
 
@@ -48,17 +63,16 @@ void drawOptions(const Options *const options) {
   int32_t posY = 100;
   drawTitle();
   drawOptionPtos(options, posY);
-  posY += FONTSIZE;
+  posY += FONTSIZE + 10;
   drawOptionTheme(options, posY);
-  posY += FONTSIZE;
+  posY += FONTSIZE + 10;
   drawOptionGameMode(options, posY);
 }
 
 void freeOptions(Options **options) {
   if (*options != NULL) {
-    internalPto = 0;
-    free(ptoData);
-    ptoData = NULL;
+    freePtos();
+    freeTheme();
     free(*options);
     *options = NULL;
     #ifdef PONG_DEBUG
@@ -88,19 +102,18 @@ static void drawOptionPtos(const Options *const options, const int32_t posY) {
   }
   Color selected = options->item == ITEM_PTOS ? globalData.colors.color3 : globalData.colors.color1;
   const char *value = TextFormat("< %d >", globalData.ptos);
+  const int32_t fontSize = 24;
 
-  DrawText(PONG_OPTION_MAX_PTOS, 10, posY, 24, selected);
-  DrawText(ptoData, GetScreenWidth() - 24 * TextLength(value), posY, 24,selected);
+  DrawText(PONG_OPTION_MAX_PTOS, 10, posY, fontSize, selected);
+  DrawText(ptoData, GetScreenWidth() - MeasureText(value, fontSize) - DIFF_RIGHT, posY, fontSize, selected);
 }
 
 static void drawOptionTheme(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_THEME ? globalData.colors.color3 : globalData.colors.color1;
-  const char *value = TextFormat("POCKET", globalData.ptos);
-
-  DrawText("THEME:", 10, posY, 24, selected);
-  DrawText(value, GetScreenWidth() - 24 * TextLength(value), posY, 24,selected);
+  const int32_t fontSize = 24;
+  DrawText("THEME:", 10, posY, fontSize, selected);
+  DrawText(themeData, GetScreenWidth() - MeasureText(themeData, fontSize) - DIFF_RIGHT, posY, fontSize,selected);
 }
-
 
 static void drawOptionGameMode(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_GAME_MODE ? globalData.colors.color3 : globalData.colors.color1;
@@ -164,11 +177,11 @@ static void updatePtos(void) {
     strcpy(ptoData, "");
     const char *num = TextFormat("%d", internalPto);
     if (internalPto > GL_MIN_PTO) {
-      strcat(ptoData, "<");
+      strcat(ptoData, LEFT);
     }
     strcat(ptoData, num);
     if (internalPto < GL_MAX_PTO) {
-      strcat(ptoData, ">");
+      strcat(ptoData, RIGHT);
     }
   }
 }
@@ -177,4 +190,66 @@ static void initPtos(void) {
   const int32_t size = 5;
   ptoData = malloc(sizeof(char) * size);
   ptoData[size - 1] = '\0';
+}
+
+static void freePtos(void) {
+  internalPto = 0;
+  free(ptoData);
+  ptoData = NULL;
+}
+
+static void initTheme(void) {
+  const int32_t size = 20;
+  themeData = malloc(sizeof(char) * size);
+  themeData[size - 1] = '\0';
+}
+static void freeTheme(void) {
+  free(themeData);
+  themeData = NULL;
+  internalTheme = -1;
+}
+
+static void updateTheme(const Options *const options) {
+  if (options->item == ITEM_THEME) {
+    const int32_t minTheme = (int32_t) THEME_POCKET_GB;
+    const int32_t maxTheme = (int32_t) THEME_CRIMSON_GB;
+    const int32_t theme = (int32_t) globalData.theme;
+    if (IsKeyPressed(KEY_LEFT) && theme > minTheme) {
+      globalData.theme--;
+    } else if (IsKeyPressed(KEY_RIGHT) && theme < maxTheme) {
+      globalData.theme++;
+    }
+  }
+}
+
+static void updateThemeData(void) {
+  if (internalTheme != globalData.theme) {
+    internalTheme = globalData.theme;
+    const int32_t minTheme = (int32_t) THEME_POCKET_GB;
+    const int32_t maxTheme = (int32_t) THEME_CRIMSON_GB;
+
+    strcpy(themeData, "");
+    if ((int32_t)internalTheme > minTheme) {
+      strcat(themeData, LEFT);
+    }
+
+    switch (internalTheme) {
+      case THEME_POCKET_GB:
+        strcat(themeData, PONG_THEME_POCKET_GB);
+        break;
+      case THEME_RUSTIC_GB:
+        strcat(themeData, PONG_THEME_RUSTIC_GB);
+        break;
+      case THEME_MIST_GB:
+        strcat(themeData, PONG_THEME_MIST_GB);
+        break;
+      case THEME_CRIMSON_GB:
+        strcat(themeData, PONG_THEME_CRIMSON_GB);
+        break;
+    }
+
+    if ((int32_t)internalTheme < maxTheme) {
+      strcat(themeData, RIGHT);
+    }
+  }
 }

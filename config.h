@@ -17,6 +17,11 @@ extern "C" {
 #define PONG_OPTION_GAME_MODE_PVP "PVP"
 #define PONG_OPTION_GAME_MODE_CPU "CPU"
 
+#define PONG_THEME_POCKET_GB "PoscketGB"
+#define PONG_THEME_RUSTIC_GB "RusticGB"
+#define PONG_THEME_MIST_GB "MistGB"
+#define PONG_THEME_CRIMSON_GB "CrimsonGB"
+
 #define PONG_COLOR_SHAPE BLUE
 
 #define PONG_MSG_WINNER "Winner!!"

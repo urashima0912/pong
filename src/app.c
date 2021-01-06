@@ -10,6 +10,7 @@ static void settingApp(void);
 static void updateApp(App *const app);
 static void drawApp(const App *const app);
 static void freeInternalApp(App *app);
+static void updateTheme(void);
 
 Global globalData = { 0 };
 
@@ -22,7 +23,7 @@ App *initApp(void) {
   }
   settingApp();
 
-  globalData.colors = getRusticGB();
+  globalData.theme = THEME_MIST_GB;
   globalData.ptos = 5;
 
   app->sceneHandler = initSceneHandler();
@@ -57,6 +58,7 @@ static void settingApp(void) {
 }
 
 static void updateApp(App *const app) {
+  updateTheme();
   updateSceneHandler(app->sceneHandler);
 
   if (IsKeyPressed(KEY_F1)) {
@@ -76,4 +78,25 @@ static void drawApp(const App *const app) {
 static void freeInternalApp(App *const app) {
   freeScenehandler(&app->sceneHandler);
   CloseWindow();
+}
+
+static void updateTheme(void) {
+  static GlTheme theme = -1;
+  if (theme != globalData.theme) {
+    theme = globalData.theme;
+    switch (theme) {
+      case THEME_POCKET_GB:
+        globalData.colors = getPocketGB();
+        break;
+      case THEME_RUSTIC_GB:
+        globalData.colors = getRusticGB();
+        break;
+      case THEME_MIST_GB:
+        globalData.colors = getMistGB();
+        break;
+      case THEME_CRIMSON_GB:
+        globalData.colors = getCrimsonGB();
+        break;
+    }
+  }
 }

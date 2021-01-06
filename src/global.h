@@ -7,6 +7,13 @@
 const static int32_t GL_MIN_PTO = 5;
 const static int32_t GL_MAX_PTO = 10;
 
+typedef enum GlTheme {
+  THEME_POCKET_GB = 0,
+  THEME_RUSTIC_GB,
+  THEME_MIST_GB,
+  THEME_CRIMSON_GB,
+} GlTheme;
+
 typedef enum OptionEvent {
   OPT_EMPTY = -1,
   OPT_START = 0,
@@ -22,6 +29,7 @@ typedef struct Colors {
 } Colors;
 
 typedef struct Global {
+  GlTheme theme;
   Colors colors;
   bool showCollisionShape;
   int32_t ptos;
