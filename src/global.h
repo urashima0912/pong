@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <stdint.h>
 
-const static int32_t GL_MIN_PTO = 5;
+const static int32_t GL_MIN_PTO = 2;
 const static int32_t GL_MAX_PTO = 10;
 
 typedef enum GlMode {

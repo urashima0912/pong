@@ -88,9 +88,12 @@ static void getEvent(Palette *palette) {
   if (palette->isEnemy) {
     moveUp = canGetUp(palette) && IsKeyDown(KEY_UP);
     moveDown = canGetDown(palette) && IsKeyDown(KEY_DOWN);
-  } else {
+  } else if (!palette->isEnemy && globalData.mode == MODE_PVP) {
     moveUp = canGetUp(palette) && IsKeyDown(KEY_W);
     moveDown = canGetDown(palette) && IsKeyDown(KEY_S);
+  } else if (globalData.mode == MODE_CPU) {
+    moveUp = canGetUp(palette) && IsKeyDown(KEY_UP);
+    moveDown = canGetDown(palette) && IsKeyDown(KEY_DOWN);
   }
 
   move(palette, moveUp, moveDown);
