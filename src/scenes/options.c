@@ -127,9 +127,10 @@ static void drawOptionTheme(const Options *const options, const int32_t posY) {
 
 static void drawOptionGameMode(const Options *const options, const int32_t posY) {
   Color selected = options->item == ITEM_GAME_MODE ? globalData.colors.color3 : globalData.colors.color1;
-  
-  DrawText(PONG_OPTION_GAME_MODE, 10, posY, 24, selected);
-  DrawText(modeData, GetScreenWidth() - 24 * TextLength(modeData), posY, 24, selected);
+  const int32_t fontSize = 24;
+
+  DrawText(PONG_OPTION_GAME_MODE, 10, posY, fontSize, selected);
+  DrawText(modeData, GetScreenWidth() - MeasureText(modeData, fontSize) - DIFF_RIGHT, posY, fontSize, selected);
 }
 
 static void updateItemSelected(Options *const options) {
