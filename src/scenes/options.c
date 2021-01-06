@@ -291,10 +291,10 @@ static void updateThemeData(void) {
 static void updateMode(const Options *const options) {
   if (options->item == ITEM_GAME_MODE) {
     const int32_t mode = (int32_t)globalData.mode;
-    if (IsKeyPressed(KEY_LEFT) && mode == MODE_CPU) {
-      globalData.mode = MODE_PVP;
-    } else if (IsKeyPressed(KEY_RIGHT) && mode == MODE_PVP) {
+    if (IsKeyPressed(KEY_LEFT) && mode == MODE_PVP) {
       globalData.mode = MODE_CPU;
+    } else if (IsKeyPressed(KEY_RIGHT) && mode == MODE_CPU) {
+      globalData.mode = MODE_PVP;
     }
   }
 }
@@ -305,13 +305,13 @@ static void updateModeData(void) {
     internalMode = globalData.mode;
     strcpy(modeData, "");
     switch (internalMode) {
-      case MODE_PVP:
-        strcat(modeData, PONG_OPTION_GAME_MODE_PVP);
+      case MODE_CPU:
+        strcat(modeData, PONG_OPTION_GAME_MODE_CPU);
         strcat(modeData, RIGHT);
         break;
-      case MODE_CPU:
+      case MODE_PVP:
         strcat(modeData, LEFT);
-        strcat(modeData, PONG_OPTION_GAME_MODE_CPU);
+        strcat(modeData, PONG_OPTION_GAME_MODE_PVP);
         break;
     }
   } 

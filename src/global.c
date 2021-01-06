@@ -39,7 +39,7 @@ Colors getCrimsonGB(void) {
 
 void initGlobal(Global *const globalData) {
     globalData->theme = THEME_MIST_GB;
-    globalData->mode = MODE_PVP;
+    globalData->mode = MODE_CPU;
     globalData->ptos = 5;
     globalData->fullScreen = false;
 }
