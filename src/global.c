@@ -42,7 +42,17 @@ void initGlobal(Global *const globalData) {
     globalData->mode = MODE_CPU;
     globalData->ptos = 5;
     globalData->fullScreen = false;
+    globalData->leftSound = LoadSound("./assets/sound/left.wav");
+    globalData->rightSound = LoadSound("./assets/sound/right.wav");
+    SetSoundVolume(globalData->leftSound, 1.0);
+    SetSoundVolume(globalData->rightSound, 1.0);
 }
+
+void freeGlobal(Global *const globalData) {
+  UnloadSound(globalData->leftSound);
+  UnloadSound(globalData->rightSound);
+}
+
 
 void drawMenuInfo(Global globalData) {
   const int32_t fontSize = 14;

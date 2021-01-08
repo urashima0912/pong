@@ -146,6 +146,7 @@ static void updateItemSelected(Options *const options) {
   const int32_t min = (int32_t) ITEM_PTOS;
   const int32_t max = (int32_t) ITEM_FULLSCREEN;
   if (IsKeyPressed(KEY_UP)) {
+    PlaySound(globalData.leftSound);
     const int32_t value = options->item - 1;
     if (value >= min) {
       options->item--;
@@ -153,6 +154,7 @@ static void updateItemSelected(Options *const options) {
       options->item = max;
     }
   } else if (IsKeyPressed(KEY_DOWN)) {
+    PlaySound(globalData.leftSound);
     const int32_t value = options->item + 1;
     if (value <= max) {
       options->item++;
@@ -178,8 +180,10 @@ static void changeValueItem(Options *const options) {
 static void changePtos(void) {
   const int32_t ptos = globalData.ptos;
   if (IsKeyPressed(KEY_LEFT) && ptos > GL_MIN_PTO) {
+    PlaySound(globalData.rightSound);
     globalData.ptos--;
   } else if (IsKeyPressed(KEY_RIGHT) && ptos < GL_MAX_PTO) {
+    PlaySound(globalData.rightSound);
     globalData.ptos++;
   }
 }
@@ -249,8 +253,10 @@ static void updateTheme(const Options *const options) {
     const int32_t maxTheme = (int32_t) THEME_CRIMSON_GB;
     const int32_t theme = (int32_t) globalData.theme;
     if (IsKeyPressed(KEY_LEFT) && theme > minTheme) {
+      PlaySound(globalData.rightSound);
       globalData.theme--;
     } else if (IsKeyPressed(KEY_RIGHT) && theme < maxTheme) {
+      PlaySound(globalData.rightSound);
       globalData.theme++;
     }
   }
@@ -292,8 +298,10 @@ static void updateMode(const Options *const options) {
   if (options->item == ITEM_GAME_MODE) {
     const int32_t mode = (int32_t)globalData.mode;
     if (IsKeyPressed(KEY_LEFT) && mode == MODE_PVP) {
+      PlaySound(globalData.rightSound);
       globalData.mode = MODE_CPU;
     } else if (IsKeyPressed(KEY_RIGHT) && mode == MODE_CPU) {
+      PlaySound(globalData.rightSound);
       globalData.mode = MODE_PVP;
     }
   }
@@ -320,8 +328,10 @@ static void updateModeData(void) {
 static void updateFullScreen(const Options *const options) {
   if (options->item == ITEM_FULLSCREEN) {
     if (IsKeyPressed(KEY_LEFT) && globalData.fullScreen) {
+      PlaySound(globalData.rightSound);
       globalData.fullScreen = false;
     } else if (IsKeyPressed(KEY_RIGHT) && !globalData.fullScreen) {
+      PlaySound(globalData.rightSound);
       globalData.fullScreen = true;
     }
   }

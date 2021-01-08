@@ -49,10 +49,12 @@ void updateBall(Ball *ball, const Palette *const player, const Palette *const en
 
   // detect collision with player
   if (collisionPalette(ball, player)) {
+    PlaySound(globalData.leftSound);
     changeBallVelocity(ball, player);
   }
 
   if (collisionPalette(ball, enemy)) {
+    PlaySound(globalData.rightSound);
     changeBallVelocity(ball, enemy);
   }
 

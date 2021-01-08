@@ -40,6 +40,7 @@ void runApp(App *const app) {
 
 void freeApp(App **app) {
   if (*app != NULL) {
+    freeGlobal(&globalData);
     freeInternalApp(*app);
     free(*app);
     *app = NULL;
@@ -56,6 +57,7 @@ static void settingApp(void) {
   HideCursor();
   SetExitKey(KEY_F8);
   SetTargetFPS(60);
+  InitAudioDevice();
 }
 
 static void updateApp(App *const app) {
@@ -76,6 +78,7 @@ static void drawApp(const App *const app) {
 
 static void freeInternalApp(App *const app) {
   freeScenehandler(&app->sceneHandler);
+  CloseAudioDevice();
   CloseWindow();
 }
 

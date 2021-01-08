@@ -46,6 +46,8 @@ typedef struct Global {
   bool showCollisionShape;
   bool fullScreen;
   int32_t ptos;
+  Sound leftSound;
+  Sound rightSound;
 } Global;
 
 Colors getPocketGB(void);
@@ -54,6 +56,7 @@ Colors getMistGB(void);
 Colors getCrimsonGB(void);
 
 void initGlobal(Global *const globalData);
+void freeGlobal(Global *const globalData);
 void drawMenuInfo(Global globalData);
 
 #endif /* PONG_GLOBAL_H */

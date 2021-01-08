@@ -81,6 +81,7 @@ static void updateMenuOptions(Menu *const menu) {
   const int32_t min = (int32_t) OPT_START;
   const int32_t max = (int32_t) OPT_EXIT;
   if (IsKeyPressed(KEY_UP)) {
+    PlaySound(globalData.leftSound);
     const int32_t value = menu->option - 1;
     if (value >= min) {
       menu->option--;
@@ -88,6 +89,7 @@ static void updateMenuOptions(Menu *const menu) {
       menu->option = OPT_EXIT;
     }
   } else if (IsKeyPressed(KEY_DOWN)) {
+    PlaySound(globalData.leftSound);
     const int32_t value = menu->option + 1;
     if (value <= max) {
       menu->option++;
