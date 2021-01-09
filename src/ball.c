@@ -8,7 +8,7 @@
 extern Global globalData;
 
 // declarations constants
-static const float SPEED = 5.3;
+static const float SPEED = 6.3;
 static const int32_t SIZE = 10;
 
 // declaration static functions.

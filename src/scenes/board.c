@@ -18,12 +18,17 @@ static void drawWinner(const Board *const board);
 static void resetValues(void);
 static void drawCounterScreen(void);
 static GameObject getGameObjectFromBall(const Board *const board);
+static void initLimit(void);
 
 static bool showCounter = false;
 static const int32_t MAX_COUNTER = 4;
 static int32_t counter = MAX_COUNTER;
 static int32_t prevCounter = 0;
 static bool someoneWon = false;
+
+static Rectangle limitLeft = (Rectangle){ 0 };
+static Rectangle limitRight = (Rectangle){ 0 };
+static const int32_t widthLimit = 25;
 
 // implementation public functions.
 Board *initBoard(void) {
@@ -33,16 +38,17 @@ Board *initBoard(void) {
     return NULL;
   }
 
+  initLimit();
   board->ptoEnemy = 0;
   board->ptoPlayer = 0;
   const int32_t sizeLimit = 15;
-  board->limitRecLeft = (Rectangle) {
+  board->recLeft = (Rectangle) {
     0,
     0,
     sizeLimit,
     GetScreenHeight()
   };
-  board->limitRecRight = (Rectangle) {
+  board->recRight = (Rectangle) {
     GetScreenWidth() - sizeLimit,
     0,
     sizeLimit,
@@ -138,13 +144,13 @@ static bool checkCollisionLimit(const Ball *const ball, const Rectangle limit) {
 }
 
 static void checkCollisions(Board *const board) {
-  if (checkCollisionLimit(board->ball, board->limitRecLeft)) {
+  if (checkCollisionLimit(board->ball, limitLeft)) {
     board->ptoEnemy += 1;
     resetBall(board->ball);
     showCounter = true;
   }
 
-  if (checkCollisionLimit(board->ball, board->limitRecRight)) {
+  if (checkCollisionLimit(board->ball, limitLeft)) {
     board->ptoPlayer += 1;
     resetBall(board->ball);
     showCounter = true;
@@ -198,22 +204,22 @@ static void drawCounter (void) {
 static void drawLimits(const Board *const board) {
   if (globalData.showCollisionShape) {
     DrawRectangleLines(
-      board->limitRecLeft.x,
-      board->limitRecLeft.y,
-      board->limitRecLeft.width,
-      board->limitRecLeft.height,
-      PONG_COLOR_SHAPE
+      limitLeft.x,
+      limitLeft.y,
+      limitLeft.width,
+      limitLeft.height,
+      RED
     );
     DrawRectangleLines(
-      board->limitRecRight.x,
-      board->limitRecRight.y,
-      board->limitRecRight.width,
-      board->limitRecRight.height,
-      PONG_COLOR_SHAPE
+      limitRight.x,
+      limitRight.y,
+      limitRight.width,
+      limitRight.height,
+      RED
     );
   } else {
-    DrawRectangleRec(board->limitRecLeft, globalData.colors.color2);
-    DrawRectangleRec(board->limitRecRight, globalData.colors.color2);
+    DrawRectangleRec(board->recLeft, globalData.colors.color2);
+    DrawRectangleRec(board->recRight, globalData.colors.color2);
   }
 }
 
@@ -272,5 +278,21 @@ static GameObject getGameObjectFromBall(const Board *const board) {
     board->ball->position,
     board->ball->size,
     board->ball->velocity
+  };
+}
+
+static void initLimit(void) {
+  limitLeft = (Rectangle){
+    0,
+    0,
+    widthLimit,
+    GetScreenHeight()
+  };
+
+  limitRight = (Rectangle) {
+    GetScreenWidth() - widthLimit,
+    0,
+    widthLimit,
+    GetScreenHeight()
   };
 }

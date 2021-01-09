@@ -17,8 +17,8 @@ typedef struct Board {
   int32_t ptoEnemy;
   int32_t ptoPlayer;
 
-  Rectangle limitRecLeft;
-  Rectangle limitRecRight;
+  Rectangle recLeft;
+  Rectangle recRight;
 
 } Board;
 

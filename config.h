@@ -40,7 +40,7 @@ extern "C" {
 #define PONG_BALL_DELETED "-->\t Ball DELETED."
 #define PONG_APP_DELETED "-->\t App DELETED."
 
-#define PONG_DEBUG 1
+// #define PONG_DEBUG 1
 
 #ifdef __cplusplus
 }
