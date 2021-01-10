@@ -12,10 +12,18 @@ The *Menu*, here there are some options, **start**, **options** (here are all op
 
 ![menu image](./screenshot/screen0.png)
 
-### Board
-
--- To do it.
-
 ### Options
 
--- To do it.
+Here there is some options for modified the game config like max points, the theme, game mode (there are two mode PvP and PvE), and as well you can change fullscreen mode.
+
+![menu image](./screenshot/screen1.png)
+
+### Board
+
+Here is the game, at left section is player palette, en right section is enemy palette.
+
+![menu image](./screenshot/screen2.png)
+
+When someone win a blue screen appears front to winner.
+
+![menu image](./screenshot/screen3.png)
